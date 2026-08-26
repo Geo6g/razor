@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Checkout Agent - Agentic Commerce</title>
+    <!-- Google Fonts Outfit & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0d13;
+            --panel-bg: rgba(17, 20, 30, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent: #a855f7;
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.2);
+            --warning: #f59e0b;
+            --warning-glow: rgba(245, 158, 11, 0.2);
+            --danger: #ef4444;
+            --danger-glow: rgba(239, 68, 68, 0.2);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            background: rgba(15, 18, 28, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo i {
+            font-size: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-logo h1 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .header-tag {
+            font-size: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .session-info {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .session-info i {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .session-info i:hover {
+            color: var(--primary);
+        }
+
+        .btn-reset {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-reset:hover {
+            background: rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 58px);
+            overflow: hidden;
+        }
+
+        /* Left Pane: Chat & Catalog Drawer */
+        .chat-pane {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Message Bubbles */
+        .message {
+            max-width: 80%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            line-height: 1.5;
+            font-size: 15px;
+            animation: fadeIn 0.3s ease-out forwards;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-bottom-right-radius: 2px;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .message.agent {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.agent strong {
+            color: var(--primary);
+        }
+
+        /* Rich elements inside agent message */
+        .message-alert {
+            margin-top: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 4px solid transparent;
+        }
+
+        .message-alert.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+            color: #fef3c7;
+        }
+
+        .message-alert.danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+            color: #fee2e2;
+        }
+
+        .message-alert.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: #d1fae5;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background-color: var(--text-muted);
+            border-radius: 50%;
+            animation: bounce 1.3s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.15s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+
+        /* Input Panel */
+        .input-panel {
+            padding: 16px 24px;
+            background: rgba(10, 12, 20, 0.9);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .chat-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text-main);
+            font-family: var(--font-main);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-send:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-send:active {
+            transform: translateY(0);
+        }
+
+        /* Catalog Box inside Chat */
+        .catalog-drawer {
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 12, 18, 0.5);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .catalog-drawer.open {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .catalog-header {
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .catalog-header:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            padding: 16px 24px;
+        }
+
+        .catalog-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .catalog-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--primary);
+        }
+
+        .cat-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .cat-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .cat-price {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* Right Pane: Audit Trail Dashboard */
+        .audit-pane {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+            background: #090a0f;
+            position: relative;
+        }
+
+        .audit-header {
+            background: #0f1118;
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .audit-title {
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .audit-title i {
+            color: var(--accent);
+        }
+
+        .audit-badge {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            background: rgba(168, 85, 247, 0.15);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .audit-feed {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .audit-item {
+            background: #11131c;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+
+        .audit-item.search_match_success { border-left: 3px solid var(--primary); }
+        .audit-item.search_match_failed { border-left: 3px solid var(--danger); }
+        .audit-item.guardrail_check { border-left: 3px solid var(--warning); }
+        .audit-item.guardrail_block { border-left: 3px solid var(--danger); }
+        .audit-item.intent_parsed { border-left: 3px solid var(--accent); }
+        .audit-item.payment_created { border-left: 3px solid var(--success); }
+        .audit-item.payment_success { border-left: 3px solid var(--success); }
+        .audit-item.payment_failure { border-left: 3px solid var(--danger); }
+        .audit-item.session_reset { border-left: 3px solid var(--text-muted); }
+
+        .audit-meta-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+        }
+
+        .action-tag {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .audit-item.search_match_success .action-tag { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+        .audit-item.search_match_failed .action-tag { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+        .audit-item.guardrail_check .action-tag { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
+        .audit-item.guardrail_block .action-tag { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+        .audit-item.intent_parsed .action-tag { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; }
+        .audit-item.payment_created .action-tag { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+        .audit-item.payment_success .action-tag { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+        .audit-item.payment_failure .action-tag { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+        .audit-item.session_reset .action-tag { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
+
+        .audit-time {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+
+        .audit-reasoning {
+            font-size: 13.5px;
+            line-height: 1.4;
+            color: #e5e7eb;
+        }
+
+        .payload-toggle {
+            font-size: 11px;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            width: fit-content;
+            margin-top: 4px;
+            user-select: none;
+        }
+
+        .payload-toggle:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        .audit-payload {
+            background: #090a0f;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #a7f3d0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 150px;
+            display: none;
+        }
+
+        /* Empty Audit Screen */
+        .empty-audit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            gap: 12px;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-audit i {
+            font-size: 40px;
+            color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+            }
+            .chat-pane {
+                flex: 1.5;
+            }
+            .audit-pane {
+                flex: 1;
+                border-top: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h1>Astra AI Checkout</h1>
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: -2px;">Hackathon Track: Agentic Commerce</p>
+            </div>
+            <span class="header-tag">Hackathon Demo</span>
+        </div>
+        <div class="header-controls">
+            <div class="session-info">
+                <span>Session ID:</span>
+                <span id="session-id-display">Generating...</span>
+                <i class="fa-solid fa-copy" onclick="copySessionId()" title="Copy Session ID"></i>
+            </div>
+            <button class="btn-reset" onclick="resetSession()">
+                <i class="fa-solid fa-rotate-left"></i>
+                Start Over
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- Left Pane: Chat Screen -->
+        <div class="chat-pane">
+            <!-- Collapsible Catalog Bar -->
+            <div class="catalog-header" onclick="toggleCatalog()">
+                <span><i class="fa-solid fa-list-check" style="margin-right: 8px;"></i> Available Merchant Catalog (15 Items)</span>
+                <i class="fa-solid fa-chevron-down" id="catalog-chevron"></i>
+            </div>
+            <div class="catalog-drawer" id="catalog-drawer">
+                <div class="catalog-grid" id="catalog-grid">
+                    <!-- Loaded dynamically via js -->
+                </div>
+            </div>
+
+            <!-- Messages list -->
+            <div class="chat-messages" id="chat-messages">
+                <div class="message agent">
+                    Hello! I am your AI checkout agent. You can describe what product you want to buy, specify budgets or quantities, and I will set up a secure checkout for you.
+                    <br><br>
+                    <strong>Try saying something like:</strong>
+                    <ul style="margin-left: 20px; margin-top: 6px; font-size: 13.5px; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px;">
+                        <li>"Find me some SpeedRun running shoes"</li>
+                        <li>"Get me 2 yoga mats under 2000 each"</li>
+                        <li>"I want 6 smart watches" (triggers quantity block)</li>
+                        <li>"I want to order a smartwatch and a dumbbell"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Chat input pane -->
+            <div class="input-panel">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your purchase request here..." onkeydown="handleKeydown(event)">
+                </div>
+                <button class="btn-send" onclick="sendMessage()">
+                    <span>Send</span>
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Pane: Audit Trail Dashboard -->
+        <div class="audit-pane">
+            <div class="audit-header">
+                <div class="audit-title">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Live Audit Logs</span>
+                    <span class="audit-badge" id="audit-count">0 Events</span>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted);">
+                    Updates in real-time
+                </div>
+            </div>
+
+            <div class="audit-feed" id="audit-feed">
+                <div class="empty-audit" id="empty-audit">
+                    <i class="fa-solid fa-database"></i>
+                    <p>No audit logs captured for this session yet.<br>Send a message to watch the AI decision trail generate in real-time.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <script>
+        // Session ID Management: generate or persist in memory
+        let sessionId = localStorage.getItem('checkout_session_id');
+        if (!sessionId) {
+            sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('checkout_session_id', sessionId);
+        }
+        document.getElementById('session-id-display').textContent = sessionId;
+
+        // Fetch catalog items from JSON and render reference cards
+        let catalogData = [];
+        fetch('/data/catalog.json') // Wait, does the Flask app serve the catalog.json? 
+            // We can fetch it directly or define a small route or hardcode it in JS.
+            // Let's make sure Flask can serve files in data or hardcode a fallback array.
+            // Let's fallback to rendering 15 hardcoded items if catalog.json fetch fails,
+            // or we can add a route in app.py to serve catalog.json if needed. Let's make sure it loads.
+            // Actually, we can fetch it, and in app.py we will make sure it's serve-able. Let's write js logic.
+            .then(res => res.json())
+            .then(data => {
+                catalogData = data;
+                renderCatalog(data);
+            })
+            .catch(err => {
+                // Hardcoded fallback for the visual UI in case of fetch errors
+                const fallbackCatalog = [
+                    { id: "prod_001", name: "SpeedRun Pro Shoes", category: "shoes", price: 4500, stock: 10 },
+                    { id: "prod_002", name: "AeroDry Running Shirt", category: "apparel", price: 1200, stock: 15 },
+                    { id: "prod_003", name: "FitTrack Smartwatch v2", category: "electronics", price: 7500, stock: 8 },
+                    { id: "prod_004", name: "FlexCore Yoga Mat", category: "fitness gear", price: 1500, stock: 20 },
+                    { id: "prod_005", name: "SoundPulse ANC Headphones", category: "electronics", price: 5500, stock: 12 },
+                    { id: "prod_006", name: "UltraGrip Gym Gloves", category: "fitness gear", price: 800, stock: 30 },
+                    { id: "prod_007", name: "HydroSip Insulated Bottle", category: "fitness gear", price: 1200, stock: 25 },
+                    { id: "prod_008", name: "ZenBreath Yoga Pants", category: "apparel", price: 2200, stock: 18 },
+                    { id: "prod_009", name: "TrailBlazer Hiking Boots", category: "shoes", price: 6500, stock: 5 },
+                    { id: "prod_010", name: "VoltCharge Power Bank", category: "electronics", price: 1800, stock: 15 },
+                    { id: "prod_011", name: "IronLift Adjustable Dumbbell", category: "fitness gear", price: 8999, stock: 4 },
+                    { id: "prod_012", name: "AirBreeze Windbreaker", category: "apparel", price: 2999, stock: 10 },
+                    { id: "prod_013", name: "PulseBeat Chest Strap", category: "fitness gear", price: 3200, stock: 14 },
+                    { id: "prod_014", name: "Apex Elite Tennis Racket", category: "fitness gear", price: 4999, stock: 7 },
+                    { id: "prod_015", name: "SoleFlex Walking Sneakers", category: "shoes", price: 3499, stock: 20 }
+                ];
+                catalogData = fallbackCatalog;
+                renderCatalog(fallbackCatalog);
+            });
+
+        function renderCatalog(items) {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'catalog-card';
+                card.onclick = () => {
+                    document.getElementById('chat-input').value = `I want to buy "${item.name}"`;
+                    document.getElementById('chat-input').focus();
+                };
+                card.innerHTML = `
+                    <div class="cat-name">${item.name}</div>
+                    <div class="cat-meta">
+                        <span style="text-transform: capitalize;">${item.category}</span>
+                        <span class="cat-price">₹${item.price.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Stock: ${item.stock}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleCatalog() {
+            const drawer = document.getElementById('catalog-drawer');
+            const chevron = document.getElementById('catalog-chevron');
+            drawer.classList.toggle('open');
+            if (drawer.classList.contains('open')) {
+                chevron.className = 'fa-solid fa-chevron-up';
+            } else {
+                chevron.className = 'fa-solid fa-chevron-down';
+            }
+        }
+
+        // Send chat message
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Render user bubble
+            appendMessage(text, 'user');
+            input.value = '';
+
+            // Render typing indicator
+            const typingId = appendTypingIndicator();
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, session_id: sessionId })
+                });
+                
+                const data = await res.json();
+                
+                // Remove typing indicator
+                document.getElementById(typingId).remove();
+
+                // Render agent response
+                appendMessage(data.response, 'agent', data.state);
+
+                // Check if payment checkout was triggered
+                if (data.payment_trigger && data.razorpay_options) {
+                    launchCheckout(data.razorpay_options);
+                }
+
+                // Refresh audit logs
+                fetchAuditTrail();
+
+            } catch (err) {
+                document.getElementById(typingId).remove();
+                appendMessage("I couldn't reach the server. Please verify the backend is running.", 'agent');
+            }
+        }
+
+        function handleKeydown(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function appendMessage(text, sender, state = '') {
+            const container = document.getElementById('chat-messages');
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}`;
+            
+            // Format text highlights for better readability (bold, lists)
+            let formattedText = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/'(.*?)'/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+                
+            msg.innerHTML = formattedText;
+            
+            // Attach visual highlights for guardrails inside chat
+            if (state === 'awaiting_escalation') {
+                msg.innerHTML += `
+                    <div class="message-alert danger">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Order locked. Human intervention required.</span>
+                    </div>
+                `;
+            } else if (text.includes('₹5,000') || text.includes('₹5000')) {
+                // High-value caution banner
+                msg.innerHTML += `
+                    <div class="message-alert warning">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Security threshold active. Extra approval required.</span>
+                    </div>
+                `;
+            }
+            
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function appendTypingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const msg = document.createElement('div');
+            const id = 'typing_' + Date.now();
+            msg.id = id;
+            msg.className = 'message agent';
+            msg.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+            return id;
+        }
+
+        // Razorpay Checkout Launcher
+        function launchCheckout(options) {
+            // Success Callback
+            options.handler = async function(response) {
+                appendMessage("Processing secure payment signature server-side...", 'agent');
+                const typingId = appendTypingIndicator();
+                
+                try {
+                    const verificationResponse = await fetch('/api/verify-payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            session_id: sessionId,
+                            status: 'success',
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature
+                        })
+                    });
+                    
+                    const verifyResult = await verificationResponse.json();
+                    document.getElementById(typingId).remove();
+                    
+                    if (verificationResponse.ok) {
+                        appendMessage(`🎉 <strong>Payment Successful!</strong> Your order has been placed successfully.<br><span style="font-size:12px; color:var(--text-muted);">Payment ID: ${response.razorpay_payment_id}</span>`, 'agent');
+                    } else {
+                        appendMessage(`❌ <strong>Payment Verification Failed!</strong> ${verifyResult.message}`, 'agent');
+                    }
+                } catch (e) {
+                    document.getElementById(typingId).remove();
+                    appendMessage("Error communicating with server during payment verification.", 'agent');
+                }
+                
+                fetchAuditTrail();
+            };
+
+            // Setup Razorpay Checkout instance
+            const rzp = new Razorpay(options);
+
+            // Failure Callback
+            rzp.on('payment.failed', async function(response) {
+                appendMessage(`❌ <strong>Transaction Declined:</strong> ${response.error.description}`, 'agent');
+                const typingId = appendTypingIndicator();
+                
+                try {
+                    await fetch('/api/verify-payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            session_id: sessionId,
+                            status: 'failed',
+                            razorpay_order_id: options.order_id,
+                            error: response.error
+                        })
+                    });
+                } catch (e) {
+                    console.error("Failed to notify backend of decline details", e);
+                }
+                
+                document.getElementById(typingId).remove();
+                fetchAuditTrail();
+            });
+
+            // Fire Checkout Pop-up
+            rzp.open();
+        }
+
+        // Fetch session audit log from database
+        async function fetchAuditTrail() {
+            try {
+                const res = await fetch(`/api/audit/${sessionId}`);
+                const logs = await res.json();
+                renderAuditLogs(logs);
+            } catch (err) {
+                console.error("Error loading audit trail:", err);
+            }
+        }
+
+        function renderAuditLogs(logs) {
+            const feed = document.getElementById('audit-feed');
+            const countBadge = document.getElementById('audit-count');
+            
+            if (logs.length === 0) {
+                document.getElementById('empty-audit').style.display = 'flex';
+                countBadge.textContent = '0 Events';
+                return;
+            }
+
+            document.getElementById('empty-audit').style.display = 'none';
+            countBadge.textContent = `${logs.length} Event${logs.length > 1 ? 's' : ''}`;
+
+            // Create list elements, keeping scroll position if user scrolled up
+            // Otherwise auto scroll to bottom. We'll rebuild to preserve styling easily.
+            feed.innerHTML = '';
+            
+            logs.forEach(log => {
+                const item = document.createElement('div');
+                item.className = `audit-item ${log.action_type}`;
+                
+                // Formatted timestamp
+                const date = new Date(log.timestamp + 'Z'); // Parse SQLite datetime as UTC
+                const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                
+                const payloadId = `payload_${log.id}`;
+                
+                item.innerHTML = `
+                    <div class="audit-meta-line">
+                        <span class="action-tag">${log.action_type.replace('_', ' ')}</span>
+                        <span class="audit-time">${formattedTime}</span>
+                    </div>
+                    <div class="audit-reasoning">${log.reasoning}</div>
+                `;
+
+                if (log.payload) {
+                    const stringified = JSON.stringify(log.payload, null, 2);
+                    item.innerHTML += `
+                        <div class="payload-toggle" onclick="togglePayload('${payloadId}')">
+                            <i class="fa-solid fa-brackets-curly"></i> View Raw Payload <i class="fa-solid fa-chevron-down" style="font-size: 8px;" id="chevron_${payloadId}"></i>
+                        </div>
+                        <pre class="audit-payload" id="${payloadId}">${escapeHtml(stringified)}</pre>
+                    `;
+                }
+
+                feed.appendChild(item);
+            });
+
+            // Auto-scroll to bottom of logs
+            feed.scrollTop = feed.scrollHeight;
+        }
+
+        function togglePayload(id) {
+            const pre = document.getElementById(id);
+            const chevron = document.getElementById(`chevron_${id}`);
+            if (pre.style.display === 'block') {
+                pre.style.display = 'none';
+                chevron.className = 'fa-solid fa-chevron-down';
+            } else {
+                pre.style.display = 'block';
+                chevron.className = 'fa-solid fa-chevron-up';
+            }
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+
+        // Reset session state
+        async function resetSession() {
+            if (confirm("Clear session state and generate new user ID?")) {
+                try {
+                    // Notify backend to reset
+                    await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: 'reset', session_id: sessionId })
+                    });
+                } catch(e) {}
+                
+                // Clear locally
+                sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('checkout_session_id', sessionId);
+                document.getElementById('session-id-display').textContent = sessionId;
+                
+                // Reset messaging interface
+                document.getElementById('chat-messages').innerHTML = `
+                    <div class="message agent">
+                        Session restarted! I am ready to find products. What are you looking for?
+                    </div>
+                `;
+                
+                fetchAuditTrail();
+            }
+        }
+
+        function copySessionId() {
+            navigator.clipboard.writeText(sessionId);
+            alert('Session ID copied to clipboard!');
+        }
+
+        // Set up initial audit trail checks
+        fetchAuditTrail();
+        // Periodically poll for audit log updates (useful for backend logs/webhooks)
+        setInterval(fetchAuditTrail, 3000);
+    </script>
+</body>
+</html>

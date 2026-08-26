@@ -1,0 +1,1872 @@
+[
+  {
+    "id": "prod_earbuds_01",
+    "name": "SoundFlow Wireless Earbuds",
+    "description": "True wireless earbuds with touch controls, IPX5 sweat resistance, and 24-hour total battery life.",
+    "price": 2499.0,
+    "cost_price": 1200.0,
+    "profit_margin": 1299.0,
+    "category": "earbuds",
+    "features": [
+      "Bluetooth 5.3",
+      "IPX5 Sweatproof",
+      "Touch Controls",
+      "24h Playtime"
+    ],
+    "stock": 45,
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_02",
+    "name": "SonicWave ANC Earbuds",
+    "description": "Premium active noise cancelling earbuds with transparency mode and spatial audio support.",
+    "price": 4999.0,
+    "cost_price": 2200.0,
+    "profit_margin": 2799.0,
+    "category": "earbuds",
+    "features": [
+      "Active Noise Cancelling",
+      "Spatial Audio",
+      "Qi Wireless Charging",
+      "32h Playtime"
+    ],
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1608156639585-b3a032ef9689?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_03",
+    "name": "AeroSport Fit Earhooks",
+    "description": "Ergonomic wrap-around earhook earbuds designed for running, gym workouts, and intense sports.",
+    "price": 2999.0,
+    "cost_price": 1400.0,
+    "profit_margin": 1599.0,
+    "category": "earbuds",
+    "features": [
+      "Secure Earhook Fit",
+      "IPX7 Waterproof",
+      "Extra Bass",
+      "20h Playtime"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_04",
+    "name": "EchoBuds Mini Lite",
+    "description": "Ultra-compact featherweight earbuds with clear call mic and pocket-friendly charging pill.",
+    "price": 1299.0,
+    "cost_price": 600.0,
+    "profit_margin": 699.0,
+    "category": "earbuds",
+    "features": [
+      "Ultra-Lightweight (3.5g)",
+      "ENC Call Mic",
+      "Fast Charging",
+      "18h Playtime"
+    ],
+    "stock": 60,
+    "image": "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_05",
+    "name": "HyperSync Gaming Earbuds",
+    "description": "Ultra-low 38ms latency TWS gaming earbuds with RGB LED accents and competitive soundstage.",
+    "price": 3299.0,
+    "cost_price": 1500.0,
+    "profit_margin": 1799.0,
+    "category": "earbuds",
+    "features": [
+      "38ms Ultra-Low Latency",
+      "RGB Game Mode",
+      "Dual Mics",
+      "28h Playtime"
+    ],
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1598331668826-20cecc596b86?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_06",
+    "name": "Audiophile Studio Pro Buds",
+    "description": "Hi-Res dual-driver armature earbuds with LDAC lossless codec support and studio tuning.",
+    "price": 7999.0,
+    "cost_price": 3800.0,
+    "profit_margin": 4199.0,
+    "category": "earbuds",
+    "features": [
+      "Dual Balanced Armature",
+      "LDAC Lossless",
+      "Custom EQ App",
+      "40h Playtime"
+    ],
+    "stock": 14,
+    "image": "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_07",
+    "name": "BoneConduct OpenEar Pro",
+    "description": "Open-ear bone conduction headset keeping your ears open to traffic and surroundings safely.",
+    "price": 4499.0,
+    "cost_price": 2100.0,
+    "profit_margin": 2399.0,
+    "category": "earbuds",
+    "features": [
+      "Bone Conduction Audio",
+      "Titanium Frame",
+      "IP68 Submersible",
+      "10h Playtime"
+    ],
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_08",
+    "name": "SleepQuiet Noise Masking Buds",
+    "description": "Micro-profile soft silicone sleep earbuds with soothing white noise soundscapes and alarm.",
+    "price": 3799.0,
+    "cost_price": 1800.0,
+    "profit_margin": 1999.0,
+    "category": "earbuds",
+    "features": [
+      "Side-Sleeper Fit",
+      "Passive Noise Blocking",
+      "Built-in Sleep Sounds",
+      "12h Battery"
+    ],
+    "stock": 22,
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_09",
+    "name": "BassMaster X2 TWS",
+    "description": "Extra punchy 13mm bass driver earbuds with dedicated bass boost button and splashproof case.",
+    "price": 1899.0,
+    "cost_price": 850.0,
+    "profit_margin": 1049.0,
+    "category": "earbuds",
+    "features": [
+      "13mm Heavy Bass Drivers",
+      "IPX4 Water Resistant",
+      "USB-C Fast Charge",
+      "25h Playtime"
+    ],
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1608156639585-b3a032ef9689?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_10",
+    "name": "ZenPod Wireless Hybrid",
+    "description": "Sleek metallic charging case with dual transparency modes and ceramic acoustic chambers.",
+    "price": 5499.0,
+    "cost_price": 2600.0,
+    "profit_margin": 2899.0,
+    "category": "earbuds",
+    "features": [
+      "Ceramic Drivers",
+      "Dual Transparency",
+      "Wireless Qi Charging",
+      "35h Playtime"
+    ],
+    "stock": 16,
+    "image": "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_11",
+    "name": "AirFlex Neckband Earphones",
+    "description": "Flexible memory alloy magnetic neckband with vibration call alerts and rapid fast charge.",
+    "price": 1499.0,
+    "cost_price": 700.0,
+    "profit_margin": 799.0,
+    "category": "earbuds",
+    "features": [
+      "Magnetic Snap Lock",
+      "Vibration Call Alert",
+      "10-min charge = 10h",
+      "30h Playtime"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_12",
+    "name": "PulseAir ANC Supreme",
+    "description": "Flagship -45dB active noise cancelling earbuds with 6-mic AI beamforming and personalized audio.",
+    "price": 9999.0,
+    "cost_price": 4800.0,
+    "profit_margin": 5199.0,
+    "category": "earbuds",
+    "features": [
+      "-45dB Smart ANC",
+      "6-Mic AI ENC",
+      "Multipoint Dual Connect",
+      "42h Playtime"
+    ],
+    "stock": 12,
+    "image": "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_13",
+    "name": "GlidePod OpenClip Buds",
+    "description": "Fashionable ear-cuff clip design leaving ear canal unblocked for all-day painless listening.",
+    "price": 3499.0,
+    "cost_price": 1600.0,
+    "profit_margin": 1899.0,
+    "category": "earbuds",
+    "features": [
+      "Ear Cuff Design",
+      "Zero Ear Fatigue",
+      "Directional Sound",
+      "22h Playtime"
+    ],
+    "stock": 28,
+    "image": "https://images.unsplash.com/photo-1598331668826-20cecc596b86?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_14",
+    "name": "WaveSync Budget Earbuds",
+    "description": "Everyday pocket true wireless earbuds with crisp mids, touch sensors, and auto-pairing.",
+    "price": 999.0,
+    "cost_price": 450.0,
+    "profit_margin": 549.0,
+    "category": "earbuds",
+    "features": [
+      "Auto-Pairing",
+      "Touch Controls",
+      "Type-C Charging",
+      "16h Playtime"
+    ],
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_earbuds_15",
+    "name": "TitaniumSport Extreme Buds",
+    "description": "Military-grade shockproof and IPX8 waterproof sport earbuds for extreme endurance sports.",
+    "price": 4299.0,
+    "cost_price": 2000.0,
+    "profit_margin": 2299.0,
+    "category": "earbuds",
+    "features": [
+      "MIL-STD Certified",
+      "IPX8 Waterproof",
+      "Heart Rate Sensor",
+      "28h Playtime"
+    ],
+    "stock": 19,
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_01",
+    "name": "BassBoost Bluetooth Headphones",
+    "description": "Comfortable over-ear headphones with deep bass tuning and plush memory foam earcups.",
+    "price": 3499.0,
+    "cost_price": 1500.0,
+    "profit_margin": 1999.0,
+    "category": "headphones",
+    "features": [
+      "40mm Dynamic Drivers",
+      "Deep Bass Preset",
+      "Foldable Design",
+      "40h Playtime"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_02",
+    "name": "ApexPro Noise Cancelling Headphones",
+    "description": "Pro-grade hybrid ANC headphones offering pure sound isolation, hi-res audio, and studio comfort.",
+    "price": 8999.0,
+    "cost_price": 4500.0,
+    "profit_margin": 4499.0,
+    "category": "headphones",
+    "features": [
+      "Hybrid ANC",
+      "Hi-Res Audio Certified",
+      "Dual-device Pairing",
+      "50h Playtime"
+    ],
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_03",
+    "name": "StudioMaster Open-Back Monitor",
+    "description": "Reference-grade open-back studio headphones engineered for mixing, mastering, and critical audio listening.",
+    "price": 12999.0,
+    "cost_price": 6200.0,
+    "profit_margin": 6799.0,
+    "category": "headphones",
+    "features": [
+      "50mm Neodymium Drivers",
+      "Open-Back Soundstage",
+      "Velour Ear Pads",
+      "Detachable Cable"
+    ],
+    "stock": 10,
+    "image": "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_04",
+    "name": "GamerX 7.1 Surround Headset",
+    "description": "Immersive 7.1 virtual surround gaming headset with retractable noise-cancelling boom mic and RGB lighting.",
+    "price": 4499.0,
+    "cost_price": 2100.0,
+    "profit_margin": 2399.0,
+    "category": "headphones",
+    "features": [
+      "7.1 Spatial Surround",
+      "Discord-Certified Mic",
+      "RGB Prism Sync",
+      "Cooling Gel Cushions"
+    ],
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_05",
+    "name": "TravelerFold Lightweight Wireless",
+    "description": "Compact on-ear folding headphones engineered for commuters and daily office calls.",
+    "price": 2299.0,
+    "cost_price": 1050.0,
+    "profit_margin": 1249.0,
+    "category": "headphones",
+    "features": [
+      "Swivel Fold Mechanism",
+      "Built-in HD Mic",
+      "Bluetooth 5.3",
+      "30h Playtime"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_06",
+    "name": "Audiophile Planar Magnetic Pro",
+    "description": "Ultra-thin planar magnetic diaphragm delivering unmatched transient response and zero harmonic distortion.",
+    "price": 24999.0,
+    "cost_price": 13000.0,
+    "profit_margin": 11999.0,
+    "category": "headphones",
+    "features": [
+      "Planar Magnetic Tech",
+      "Real Wood Accents",
+      "Balanced XLR Support",
+      "Ultra-Wide 5Hz-50kHz"
+    ],
+    "stock": 6,
+    "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_07",
+    "name": "QuietMax Wireless ANC",
+    "description": "Mid-tier active noise cancelling over-ear headphones with 35-hour battery and quick-charge support.",
+    "price": 5999.0,
+    "cost_price": 2800.0,
+    "profit_margin": 3199.0,
+    "category": "headphones",
+    "features": [
+      "Smart ANC Isolation",
+      "Comfort Headband",
+      "Type-C Fast Charge",
+      "35h Battery"
+    ],
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_08",
+    "name": "DJMaster Rotary Swivel Headset",
+    "description": "Heavy-duty DJ headphones with 90-degree swiveling earcups, coiled cable, and punchy club bass.",
+    "price": 4799.0,
+    "cost_price": 2250.0,
+    "profit_margin": 2549.0,
+    "category": "headphones",
+    "features": [
+      "90° Swivel Earcups",
+      "3.5m Coiled Cable",
+      "3000mW High Power",
+      "Gold-plated Jack"
+    ],
+    "stock": 15,
+    "image": "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_09",
+    "name": "KidsSafe Volume-Limited Headset",
+    "description": "Safe 85dB volume-limited headphones with durable twistable headband and fun sticker pack.",
+    "price": 1499.0,
+    "cost_price": 650.0,
+    "profit_margin": 849.0,
+    "category": "headphones",
+    "features": [
+      "85dB Safe Volume Cap",
+      "Twistable Indestructible Band",
+      "Sharing Audio Port",
+      "Soft Cushions"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_10",
+    "name": "Executive Leather Wireless Headset",
+    "description": "Luxury genuine leather and aluminum over-ear headset with AI beamforming voice microphones.",
+    "price": 14999.0,
+    "cost_price": 7500.0,
+    "profit_margin": 7499.0,
+    "category": "headphones",
+    "features": [
+      "Genuine Leather & Brushed Metal",
+      "AI Voice Clean Mic",
+      "45h Battery",
+      "Hard Carry Case"
+    ],
+    "stock": 8,
+    "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_11",
+    "name": "VibeOn Daily Wireless",
+    "description": "Everyday casual bluetooth over-ear headphones with lightweight build and 25-hour playtime.",
+    "price": 1999.0,
+    "cost_price": 900.0,
+    "profit_margin": 1099.0,
+    "category": "headphones",
+    "features": [
+      "Lightweight 180g",
+      "Bluetooth 5.2",
+      "Aux Cable Backup",
+      "25h Playtime"
+    ],
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_12",
+    "name": "ProStreamer Broadcast Headset",
+    "description": "Professional podcast and streaming headset with broadcast-quality cardioid condenser mic.",
+    "price": 7499.0,
+    "cost_price": 3600.0,
+    "profit_margin": 3899.0,
+    "category": "headphones",
+    "features": [
+      "Cardioid Condenser Mic",
+      "Zero-Latency Monitoring",
+      "Mute LED Indicator",
+      "Memory Foam Pads"
+    ],
+    "stock": 16,
+    "image": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_13",
+    "name": "RetroWood Acoustic Master",
+    "description": "Handcrafted walnut wood earcups delivering warm, natural acoustics and vintage aesthetic.",
+    "price": 10999.0,
+    "cost_price": 5400.0,
+    "profit_margin": 5599.0,
+    "category": "headphones",
+    "features": [
+      "Natural Walnut Wood",
+      "Beryllium Drivers",
+      "Braided OFC Cable",
+      "Gold Connectors"
+    ],
+    "stock": 11,
+    "image": "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_14",
+    "name": "ThunderX Wireless Bass Pro",
+    "description": "Haptic bass vibration headphones that pulse with sub-bass frequencies for movies and gaming.",
+    "price": 6499.0,
+    "cost_price": 3100.0,
+    "profit_margin": 3399.0,
+    "category": "headphones",
+    "features": [
+      "Haptic Bass Vibrations",
+      "Custom Bass Slider",
+      "40h Playtime",
+      "Fast USB-C Charge"
+    ],
+    "stock": 21,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_headphones_15",
+    "name": "UltraFit On-Ear Sport Headphone",
+    "description": "Breathable washable mesh earpads designed specifically for heavy gym workouts and cardio.",
+    "price": 2799.0,
+    "cost_price": 1300.0,
+    "profit_margin": 1499.0,
+    "category": "headphones",
+    "features": [
+      "Washable Mesh Pads",
+      "Sweat-Resistant Seal",
+      "Rugged Hinge",
+      "28h Playtime"
+    ],
+    "stock": 33,
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_01",
+    "name": "PulseFit Active Smartwatch",
+    "description": "Vibrant 1.4-inch AMOLED display with 24/7 heart rate, SpO2 monitoring, and 50+ workout modes.",
+    "price": 2999.0,
+    "cost_price": 1300.0,
+    "profit_margin": 1699.0,
+    "category": "smartwatches",
+    "features": [
+      "1.4-inch AMOLED",
+      "24/7 SpO2 & Heart Rate",
+      "5ATM Water Resistance",
+      "10-day Battery"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_02",
+    "name": "Titanium Rugged GPS Watch",
+    "description": "Military-grade rugged multisport GPS watch with offline topo maps, altimeter, and compass.",
+    "price": 12999.0,
+    "cost_price": 6000.0,
+    "profit_margin": 6999.0,
+    "category": "smartwatches",
+    "features": [
+      "Dual-Band GPS",
+      "Sapphire Glass Screen",
+      "Offline Maps",
+      "21-day Battery"
+    ],
+    "stock": 15,
+    "image": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_03",
+    "name": "ChronoLuxe Stainless Smartwatch",
+    "description": "Classic analog chronograph aesthetics combined with discreet OLED notifications and sapphire crystal.",
+    "price": 8499.0,
+    "cost_price": 4000.0,
+    "profit_margin": 4499.0,
+    "category": "smartwatches",
+    "features": [
+      "Stainless Steel 316L",
+      "Discreet Smart Subdial",
+      "NFC Payments",
+      "30-day Hybrid Battery"
+    ],
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_04",
+    "name": "AeroCall Bluetooth Calling Watch",
+    "description": "1.96-inch curved HD screen with crystal-clear bluetooth speakerphone and quick dial pad.",
+    "price": 1999.0,
+    "cost_price": 900.0,
+    "profit_margin": 1099.0,
+    "category": "smartwatches",
+    "features": [
+      "Bluetooth HD Calling",
+      "1.96-inch HD Screen",
+      "100+ Sports Modes",
+      "7-day Battery"
+    ],
+    "stock": 55,
+    "image": "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_05",
+    "name": "ApexRunner Marathon Pro",
+    "description": "Ultra-lightweight 32g running watch with real-time VO2 max, cadence tracking, and pace coach.",
+    "price": 6999.0,
+    "cost_price": 3300.0,
+    "profit_margin": 3699.0,
+    "category": "smartwatches",
+    "features": [
+      "VO2 Max & Training Load",
+      "32g Featherweight",
+      "Always-On Reflective Screen",
+      "14-day GPS"
+    ],
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_06",
+    "name": "FemmeFit Elegance Smartwatch",
+    "description": "Slim rose-gold mesh band smartwatch with female health tracking, sleep cycle, and hydration coach.",
+    "price": 3499.0,
+    "cost_price": 1600.0,
+    "profit_margin": 1899.0,
+    "category": "smartwatches",
+    "features": [
+      "Rose Gold Mesh Band",
+      "Menstrual Cycle Tracker",
+      "Stress & Mood Tracker",
+      "8-day Battery"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_07",
+    "name": "UrbanGlow AMOLED Smartwatch",
+    "description": "Stunning 1.43-inch Always-On AMOLED screen with metallic rotating bezel and customizable widgets.",
+    "price": 4499.0,
+    "cost_price": 2100.0,
+    "profit_margin": 2399.0,
+    "category": "smartwatches",
+    "features": [
+      "1.43-inch AMOLED Always-On",
+      "Rotating Functional Crown",
+      "IP68 Waterproof",
+      "12-day Battery"
+    ],
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_08",
+    "name": "VitalsPro Medical ECG Watch",
+    "description": "Clinical grade single-lead ECG recording, optical blood pressure trend, and temperature sensor.",
+    "price": 9999.0,
+    "cost_price": 4900.0,
+    "profit_margin": 5099.0,
+    "category": "smartwatches",
+    "features": [
+      "ECG Arrhythmia Detection",
+      "Body Temp Sensor",
+      "Sleep Apnea Warning",
+      "FDA Compliant"
+    ],
+    "stock": 14,
+    "image": "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_09",
+    "name": "FitBand 6 Activity Tracker",
+    "description": "Slim fitness band with 1.47-inch curved OLED, continuous pulse tracker, and swim-proof chassis.",
+    "price": 1499.0,
+    "cost_price": 680.0,
+    "profit_margin": 819.0,
+    "category": "smartwatches",
+    "features": [
+      "1.47-inch Curved OLED",
+      "5ATM Swimproof",
+      "Auto Workout Detect",
+      "14-day Battery"
+    ],
+    "stock": 60,
+    "image": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_10",
+    "name": "ApexLTE Standalone Calling Watch",
+    "description": "4G eSIM capable smartwatch for independent calls, streaming music, and emergency SOS without phone.",
+    "price": 15999.0,
+    "cost_price": 8000.0,
+    "profit_margin": 7999.0,
+    "category": "smartwatches",
+    "features": [
+      "4G eSIM Standalone",
+      "Dual Cameras for Video",
+      "Google Play App Store",
+      "GPS + GLONASS"
+    ],
+    "stock": 9,
+    "image": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_11",
+    "name": "SolarDrive Tactical Smartwatch",
+    "description": "Solar-charging lens giving unlimited battery in sunlight, stealth mode, and night-vision compatibility.",
+    "price": 18999.0,
+    "cost_price": 9500.0,
+    "profit_margin": 9499.0,
+    "category": "smartwatches",
+    "features": [
+      "Power Glass Solar Charging",
+      "Stealth Mode Killswitch",
+      "Tactical Flashlight",
+      "MIL-STD-810H"
+    ],
+    "stock": 7,
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_12",
+    "name": "KidsSafe GPS Locator Watch",
+    "description": "Child smartwatch with geofencing perimeter alerts, two-way SOS calling, and parent monitoring app.",
+    "price": 2799.0,
+    "cost_price": 1300.0,
+    "profit_margin": 1499.0,
+    "category": "smartwatches",
+    "features": [
+      "Real-Time GPS Geofence",
+      "One-Touch SOS Button",
+      "Camera & Voice Chat",
+      "Class Mode"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_13",
+    "name": "DiverPro 200M Scuba Watch",
+    "description": "200-meter certified scuba dive computer watch with depth gauge, surface interval, and dive log.",
+    "price": 21999.0,
+    "cost_price": 11000.0,
+    "profit_margin": 10999.0,
+    "category": "smartwatches",
+    "features": [
+      "EN13319 200M Scuba Rating",
+      "Live Depth & Temp Gauge",
+      "Decompression Planner",
+      "Fluorescent Hands"
+    ],
+    "stock": 5,
+    "image": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_14",
+    "name": "TempoSport GPS Smartwatch",
+    "description": "Built-in standalone GPS tracking for cycling and running with accurate elevation and heart zones.",
+    "price": 4999.0,
+    "cost_price": 2300.0,
+    "profit_margin": 2699.0,
+    "category": "smartwatches",
+    "features": [
+      "Built-in GPS & GLONASS",
+      "Heart Rate Zones",
+      "Strava Sync",
+      "10-day Battery"
+    ],
+    "stock": 28,
+    "image": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smartwatches_15",
+    "name": "SlimEdge Curved Smartwatch",
+    "description": "Ultra-thin 8.9mm aviation aluminum casing with bezel-less 3D curved waterfall glass screen.",
+    "price": 3999.0,
+    "cost_price": 1850.0,
+    "profit_margin": 2149.0,
+    "category": "smartwatches",
+    "features": [
+      "8.9mm Slim Profile",
+      "3D Curved Glass",
+      "SpO2 & Sleep Monitor",
+      "Magnetic Fast Charge"
+    ],
+    "stock": 32,
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_01",
+    "name": "BoomBox Mini Waterproof Speaker",
+    "description": "Rugged IPX7 waterproof portable Bluetooth speaker with punchy 360-degree sound and 12h battery.",
+    "price": 1999.0,
+    "cost_price": 950.0,
+    "profit_margin": 1049.0,
+    "category": "speakers",
+    "features": [
+      "IPX7 Waterproof",
+      "360-degree Audio",
+      "Carabiner Clip",
+      "12h Battery"
+    ],
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_02",
+    "name": "PartyBlaster 60W RGB Speaker",
+    "description": "High-power 60W outdoor party speaker with beat-synced RGB flame lighting and dual bass radiators.",
+    "price": 6499.0,
+    "cost_price": 3200.0,
+    "profit_margin": 3299.0,
+    "category": "speakers",
+    "features": [
+      "60W Peak Power",
+      "Beat-Driven RGB Lights",
+      "TWS Stereo Pairing",
+      "20h Battery"
+    ],
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_03",
+    "name": "SoundBar Studio 120W Subwoofer",
+    "description": "2.1 Channel home theater soundbar with wireless down-firing subwoofer and Dolby Audio.",
+    "price": 9999.0,
+    "cost_price": 5000.0,
+    "profit_margin": 4999.0,
+    "category": "speakers",
+    "features": [
+      "120W Dolby Audio",
+      "Wireless Down-Firing Sub",
+      "HDMI eARC & Optical",
+      "EQ Presets"
+    ],
+    "stock": 12,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_04",
+    "name": "ZenWood Hi-Fi Desktop Speaker",
+    "description": "Hand-crafted wood veneer bookshelf speaker pair with silk dome tweeters and aptX HD streaming.",
+    "price": 11499.0,
+    "cost_price": 5800.0,
+    "profit_margin": 5699.0,
+    "category": "speakers",
+    "features": [
+      "Silk Dome Tweeters",
+      "Real Wood Cabinets",
+      "aptX HD Bluetooth",
+      "RCA & Optical Inputs"
+    ],
+    "stock": 10,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_05",
+    "name": "PocketGlow Clip Speaker",
+    "description": "Micro palm-sized Bluetooth speaker with integrated flashlight and carabiner for camping.",
+    "price": 1199.0,
+    "cost_price": 550.0,
+    "profit_margin": 649.0,
+    "category": "speakers",
+    "features": [
+      "Palm Size (160g)",
+      "Built-in Flashlight",
+      "IPX5 Splashproof",
+      "8h Playtime"
+    ],
+    "stock": 65,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_06",
+    "name": "AeroSound 360 Spatial Tower",
+    "description": "Cylindrical aluminum smart speaker with 360-degree omnidirectional acoustic waveguide.",
+    "price": 4999.0,
+    "cost_price": 2400.0,
+    "profit_margin": 2599.0,
+    "category": "speakers",
+    "features": [
+      "Omnidirectional Audio",
+      "Touch Volume Wheel",
+      "Voice Assistant Mic",
+      "18h Playtime"
+    ],
+    "stock": 22,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_07",
+    "name": "EchoSmart Voice Assistant Speaker",
+    "description": "Smart home hub speaker with far-field voice recognition, smart home automation, and Wi-Fi audio.",
+    "price": 3799.0,
+    "cost_price": 1900.0,
+    "profit_margin": 1899.0,
+    "category": "speakers",
+    "features": [
+      "Far-Field Voice AI",
+      "Dual-Band Wi-Fi",
+      "Matter & Zigbee Hub",
+      "Privacy Mic Switch"
+    ],
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_08",
+    "name": "SplashTune Shower Bluetooth Speaker",
+    "description": "100% waterproof speaker with heavy-duty suction cup, FM radio, and hands-free shower calling.",
+    "price": 1499.0,
+    "cost_price": 680.0,
+    "profit_margin": 819.0,
+    "category": "speakers",
+    "features": [
+      "Heavy Duty Suction Cup",
+      "IPX7 Full Submersion",
+      "Built-in FM Radio",
+      "Microphone"
+    ],
+    "stock": 45,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_09",
+    "name": "ThunderTube 40W Rugged Boombox",
+    "description": "Tube-style rugged outdoor speaker with rubberized shock bumpers and power bank output.",
+    "price": 4299.0,
+    "cost_price": 2000.0,
+    "profit_margin": 2299.0,
+    "category": "speakers",
+    "features": [
+      "40W Dynamic Bass",
+      "Rubber Shock Absorbers",
+      "Powerbank USB-A Out",
+      "16h Playtime"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_10",
+    "name": "Audiophile Reference Soundbar 5.1",
+    "description": "True 5.1 wireless surround soundbar system with rear satellite speakers and wireless 8-inch sub.",
+    "price": 24999.0,
+    "cost_price": 13000.0,
+    "profit_margin": 11999.0,
+    "category": "speakers",
+    "features": [
+      "Dolby Atmos 5.1",
+      "Wireless Rear Satellites",
+      "8-inch Ported Subwoofer",
+      "HDMI 4K Passthrough"
+    ],
+    "stock": 6,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_11",
+    "name": "RetroGramophone Vintage Speaker",
+    "description": "Brass horn vintage gramophone styled bluetooth speaker with analog rotary brass knobs.",
+    "price": 7999.0,
+    "cost_price": 3800.0,
+    "profit_margin": 4199.0,
+    "category": "speakers",
+    "features": [
+      "Polished Brass Horn",
+      "Solid Oak Body",
+      "Analog Equalizer Knobs",
+      "Bluetooth 5.3"
+    ],
+    "stock": 10,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_12",
+    "name": "RGB Pulse Desk Gaming Soundbar",
+    "description": "Compact under-monitor desktop soundbar with dynamic RGB reactive lighting and headphone jack.",
+    "price": 2499.0,
+    "cost_price": 1150.0,
+    "profit_margin": 1349.0,
+    "category": "speakers",
+    "features": [
+      "Under-Monitor Fit",
+      "Reactive RGB Modes",
+      "One-Touch Mic Mute",
+      "USB Powered"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_13",
+    "name": "SolarCamp Outdoor Speaker",
+    "description": "Solar-panel equipped outdoor speaker with integrated LED lantern, SOS siren, and hand crank.",
+    "price": 3299.0,
+    "cost_price": 1550.0,
+    "profit_margin": 1749.0,
+    "category": "speakers",
+    "features": [
+      "Monocrystalline Solar Cell",
+      "Emergency Hand Crank",
+      "Camp Lantern",
+      "IP66 Weatherproof"
+    ],
+    "stock": 24,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_14",
+    "name": "MegaBass Party Monster 100W",
+    "description": "Giant 100W party speaker with DJ strobe lights, guitar and wireless microphone inputs.",
+    "price": 14999.0,
+    "cost_price": 7600.0,
+    "profit_margin": 7399.0,
+    "category": "speakers",
+    "features": [
+      "100W RMS Blast",
+      "Strobe & Disco Lights",
+      "Dual Mic / Guitar In",
+      "Trolley Wheels & Handle"
+    ],
+    "stock": 8,
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_speakers_15",
+    "name": "VibeCube Magnetic Mini Speaker",
+    "description": "Magnetic dual stereo speakers that stick to gym racks, golf carts, or snap together into one.",
+    "price": 2199.0,
+    "cost_price": 1000.0,
+    "profit_margin": 1199.0,
+    "category": "speakers",
+    "features": [
+      "Strong Neodymium Magnet",
+      "Snap-Together Dual TWS",
+      "Pocket Friendly",
+      "10h Playtime"
+    ],
+    "stock": 38,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_01",
+    "name": "MagCharge Wireless Stand",
+    "description": "15W fast MagSafe compatible 3-in-1 charging stand for phone, earbuds, and smartwatch.",
+    "price": 1499.0,
+    "cost_price": 700.0,
+    "profit_margin": 799.0,
+    "category": "accessories",
+    "features": [
+      "15W MagSafe Fast Charge",
+      "3-in-1 Charging Hub",
+      "Overheat Protection",
+      "Aluminum Stem"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_02",
+    "name": "PowerVolt 20000mAh Power Bank",
+    "description": "65W PD fast-charging heavy duty power bank capable of charging laptops, tablets, and phones.",
+    "price": 2499.0,
+    "cost_price": 1200.0,
+    "profit_margin": 1299.0,
+    "category": "accessories",
+    "features": [
+      "65W Laptop PD Output",
+      "20,000mAh Capacity",
+      "Digital Battery Display",
+      "Triple Output Ports"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_03",
+    "name": "UltraLink Braided Cable 2M",
+    "description": "Durable nylon braided 100W Type-C to Type-C cable with reinforced strain relief connectors.",
+    "price": 299.0,
+    "cost_price": 100.0,
+    "profit_margin": 199.0,
+    "category": "accessories",
+    "features": [
+      "100W PD Fast Charging",
+      "480Mbps Data Sync",
+      "20,000+ Bend Tested",
+      "2 Meter Length"
+    ],
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_04",
+    "name": "FlexShield Silicone Case",
+    "description": "Shock-absorbent slim matte liquid silicone protective case with microfiber inner lining.",
+    "price": 399.0,
+    "cost_price": 100.0,
+    "profit_margin": 299.0,
+    "category": "accessories",
+    "features": [
+      "Liquid Silicone Finish",
+      "Microfiber Inner Lining",
+      "Raised Camera Lip",
+      "Wireless Compatible"
+    ],
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_05",
+    "name": "GaNFast 65W Triple Charger",
+    "description": "Ultra-compact Gallium Nitride 65W wall adapter with 2x Type-C and 1x USB-A fast charging ports.",
+    "price": 1899.0,
+    "cost_price": 850.0,
+    "profit_margin": 1049.0,
+    "category": "accessories",
+    "features": [
+      "GaN III Technology",
+      "Foldable US/UK Prongs",
+      "Charges MacBook + Phone",
+      "Cool Running"
+    ],
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_06",
+    "name": "MagSafe Magnetic Power Bank 10K",
+    "description": "Snap-on magnetic 10,000mAh wireless power bank with foldable kickstand for hands-free viewing.",
+    "price": 2199.0,
+    "cost_price": 1050.0,
+    "profit_margin": 1149.0,
+    "category": "accessories",
+    "features": [
+      "Magnetic Snap Charge",
+      "Built-in Foldable Stand",
+      "20W Wired Fast Charge",
+      "Pass-Through Charging"
+    ],
+    "stock": 42,
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_07",
+    "name": "ErgoStand Aluminum Laptop Lift",
+    "description": "Full aluminum ergonomic laptop stand with 6 adjustable height levels and heat dissipation vents.",
+    "price": 1299.0,
+    "cost_price": 550.0,
+    "profit_margin": 749.0,
+    "category": "accessories",
+    "features": [
+      "Aviation Grade Aluminum",
+      "6 Elevation Angles",
+      "Foldable with Velvet Pouch",
+      "Supports up to 17\""
+    ],
+    "stock": 60,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_08",
+    "name": "ScreenMaster 7-in-1 Cleaning Kit",
+    "description": "All-in-one cleaning tool kit for mechanical keyboards, earbud sound tubes, phone screens, and lenses.",
+    "price": 499.0,
+    "cost_price": 180.0,
+    "profit_margin": 319.0,
+    "category": "accessories",
+    "features": [
+      "High-Density Keyboard Brush",
+      "Earbud Flock Sponge",
+      "Keycap Puller",
+      "Microfiber Screen Wipe"
+    ],
+    "stock": 90,
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_09",
+    "name": "SmartTag Bluetooth Tracker (2-Pack)",
+    "description": "Precision item tracker tags compatible with Apple FindMy and Android tracker networks.",
+    "price": 1799.0,
+    "cost_price": 800.0,
+    "profit_margin": 999.0,
+    "category": "accessories",
+    "features": [
+      "Global FindMy Network",
+      "Loud 90dB Buzzer",
+      "1-Year Replaceable CR2032",
+      "IP67 Water Resistant"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_10",
+    "name": "10-in-1 USB-C Hub Dock",
+    "description": "Multiport adapter featuring 4K 60Hz HDMI, Gigabit Ethernet, SD card readers, 100W PD, and USB 3.2.",
+    "price": 3299.0,
+    "cost_price": 1600.0,
+    "profit_margin": 1699.0,
+    "category": "accessories",
+    "features": [
+      "4K@60Hz HDMI",
+      "Gigabit RJ45 LAN",
+      "100W PD Passthrough",
+      "High-speed SD/TF"
+    ],
+    "stock": 28,
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_11",
+    "name": "CarMount Auto-Clamping Qi Charger",
+    "description": "Smart infrared sensor car air vent phone mount with 15W wireless charging and capacitor auto-open.",
+    "price": 1699.0,
+    "cost_price": 750.0,
+    "profit_margin": 949.0,
+    "category": "accessories",
+    "features": [
+      "Auto Motorized Clamping",
+      "15W Fast Qi Charging",
+      "Super-Capacitor Backup",
+      "360° Ball Joint"
+    ],
+    "stock": 45,
+    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_12",
+    "name": "CableOrganizer Hard Travel Case",
+    "description": "Waterproof EVA shockproof travel pouch with elastic loops and mesh dividers for chargers and cords.",
+    "price": 699.0,
+    "cost_price": 280.0,
+    "profit_margin": 419.0,
+    "category": "accessories",
+    "features": [
+      "Shockproof Hard EVA Shell",
+      "Water-Repellent Fabric",
+      "Double YKK Zippers",
+      "Customizable Dividers"
+    ],
+    "stock": 70,
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_13",
+    "name": "Precision Active Stylus Pen",
+    "description": "Palm rejection active digital stylus with tilt sensitivity and magnetic iPad attachment.",
+    "price": 1999.0,
+    "cost_price": 850.0,
+    "profit_margin": 1149.0,
+    "category": "accessories",
+    "features": [
+      "Palm Rejection",
+      "Tilt Angle Sensitivity",
+      "Magnetic Wireless Snap",
+      "1.5mm Fine POM Tip"
+    ],
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_14",
+    "name": "HeavyDuty 30000mAh Solar Power Station",
+    "description": "Monster capacity power bank with built-in solar panels, 4 built-in charging cables, and camp floodlight.",
+    "price": 3499.0,
+    "cost_price": 1700.0,
+    "profit_margin": 1799.0,
+    "category": "accessories",
+    "features": [
+      "30,000mAh Monster Capacity",
+      "4 Integrated Cables",
+      "Solar Panel Trickle Charge",
+      "Bright LED Flashlight"
+    ],
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_15",
+    "name": "GaN 140W Ultimate Quad Charger",
+    "description": "Next-gen PD 3.1 140W GaN wall charger capable of full speed charging for 16-inch MacBook Pro.",
+    "price": 3999.0,
+    "cost_price": 1900.0,
+    "profit_margin": 2099.0,
+    "category": "accessories",
+    "features": [
+      "PD 3.1 140W Single Port",
+      "4 Output Ports (3C+1A)",
+      "Intelligent Power Split",
+      "GaN Prime Heat Guard"
+    ],
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_16",
+    "name": "Privacy Glass Screen Protector (2-Pack)",
+    "description": "28-degree anti-peep tempered glass screen protector with 9H diamond hardness and easy align tray.",
+    "price": 499.0,
+    "cost_price": 150.0,
+    "profit_margin": 349.0,
+    "category": "accessories",
+    "features": [
+      "28° Anti-Spy Filter",
+      "9H Scratch Resistance",
+      "Oleophobic Anti-Fingerprint",
+      "Auto-Dust Alignment Frame"
+    ],
+    "stock": 85,
+    "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_17",
+    "name": "Universal International Travel Adapter",
+    "description": "All-in-one worldwide plug adapter for US, UK, EU, AU sockets with 4x USB fast charge outputs.",
+    "price": 1299.0,
+    "cost_price": 550.0,
+    "profit_margin": 749.0,
+    "category": "accessories",
+    "features": [
+      "Covers 150+ Countries",
+      "Dual Fuse Safety",
+      "3x USB-A + 1x Type-C",
+      "Compact Slide Mechanism"
+    ],
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_18",
+    "name": "RGB Desk Mat Extra Large (900x400mm)",
+    "description": "Micro-textured waterproof cloth gaming mousepad with 14 RGB Chroma perimeter lighting modes.",
+    "price": 1199.0,
+    "cost_price": 500.0,
+    "profit_margin": 699.0,
+    "category": "accessories",
+    "features": [
+      "900x400x4mm XL Surface",
+      "14 RGB Light Modes",
+      "Non-Slip Natural Rubber",
+      "Spill-Resistant Nano Coat"
+    ],
+    "stock": 45,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_19",
+    "name": "Magnetic Ring Grip & Kickstand",
+    "description": "Ultra-strong MagSafe compatible 360-degree rotating finger ring holder and dual-direction stand.",
+    "price": 499.0,
+    "cost_price": 180.0,
+    "profit_margin": 319.0,
+    "category": "accessories",
+    "features": [
+      "N52 Powerful Magnets",
+      "360° Rotation + 180° Flip",
+      "Zinc Alloy Build",
+      "Snap On / Off Easily"
+    ],
+    "stock": 75,
+    "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_acc_20",
+    "name": "UltraThin Webcam Cover (3-Pack)",
+    "description": "0.7mm discreet slider privacy camera cover for laptops, tablets, and smartphone lenses.",
+    "price": 199.0,
+    "cost_price": 50.0,
+    "profit_margin": 149.0,
+    "category": "accessories",
+    "features": [
+      "0.7mm Ultra-Thin",
+      "Smooth Slide Mechanism",
+      "3M Residue-Free Adhesive",
+      "Fits All Laptops"
+    ],
+    "stock": 120,
+    "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_01",
+    "name": "ViperStrike Wireless Gaming Mouse",
+    "description": "Ultra-lightweight 49g competitive esports wireless mouse with 26,000 DPI optical sensor and 4K polling.",
+    "price": 3999.0,
+    "cost_price": 1800.0,
+    "profit_margin": 2199.0,
+    "category": "gaming",
+    "features": [
+      "49g Ultra-Lightweight",
+      "26K DPI Optical Sensor",
+      "4000Hz Polling Rate",
+      "80h Battery"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_02",
+    "name": "CyberKey 75% Mechanical Keyboard",
+    "description": "Gasket-mounted hot-swappable mechanical gaming keyboard with factory lubricated linear switches and volume knob.",
+    "price": 5499.0,
+    "cost_price": 2600.0,
+    "profit_margin": 2899.0,
+    "category": "gaming",
+    "features": [
+      "Gasket Mount Acoustics",
+      "Hot-Swap 5-Pin Sockets",
+      "South-Facing RGB",
+      "Multi-Function Metal Knob"
+    ],
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_03",
+    "name": "ProGame Wireless Gamepad Controller",
+    "description": "Hall-effect anti-drift analog joystick controller with programmable rear paddles and mechanical click triggers.",
+    "price": 3299.0,
+    "cost_price": 1500.0,
+    "profit_margin": 1799.0,
+    "category": "gaming",
+    "features": [
+      "Hall Effect Magnetic Sticks",
+      "2 Mappable Back Paddles",
+      "Multi-Platform PC/Switch/iOS",
+      "Motion Gyro"
+    ],
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_04",
+    "name": "StreamControl 15-Key Macro Pad",
+    "description": "Customizable LCD visual shortcut controller with dynamic action triggers and live Twitch/OBS integration.",
+    "price": 8999.0,
+    "cost_price": 4200.0,
+    "profit_margin": 4799.0,
+    "category": "gaming",
+    "features": [
+      "15 Customizable LCD Keys",
+      "One-Touch Scene Switching",
+      "Plugin App Store",
+      "Adjustable Stand"
+    ],
+    "stock": 12,
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_05",
+    "name": "FrostCore Magnetic Phone Cooler",
+    "description": "Peltier semiconductor active cooling fan with RGB display for uninterrupted mobile esports gaming.",
+    "price": 1799.0,
+    "cost_price": 750.0,
+    "profit_margin": 1049.0,
+    "category": "gaming",
+    "features": [
+      "Semiconductor Cold Plate",
+      "Drops Temp by 18°C",
+      "MagSafe Magnetic Attachment",
+      "Quiet Fan"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_06",
+    "name": "AeroGlass Precision Glass Mousepad",
+    "description": "Tempered glass gaming mousepad surface providing near zero initial friction for micro-aim adjustments.",
+    "price": 3499.0,
+    "cost_price": 1600.0,
+    "profit_margin": 1899.0,
+    "category": "gaming",
+    "features": [
+      "Aluminosilicate Glass",
+      "Beveled Safe Edges",
+      "Full Silicone Base",
+      "Easy Clean Coating"
+    ],
+    "stock": 15,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_07",
+    "name": "ArcadeFight Hitbox Button Controller",
+    "description": "All-button leverless arcade fight stick with ultra-fast optical switches and custom SOCD cleaning.",
+    "price": 6999.0,
+    "cost_price": 3300.0,
+    "profit_margin": 3699.0,
+    "category": "gaming",
+    "features": [
+      "Leverless All-Button Layout",
+      "Cherry MX Low Profile Switches",
+      "SOCD Modes",
+      "PS5/PC/Switch Support"
+    ],
+    "stock": 9,
+    "image": "https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_08",
+    "name": "DualMonitor Gas Spring Heavy Arm",
+    "description": "Heavy duty gas spring dual monitor mount holding up to two 35-inch curved ultrawide screens.",
+    "price": 4499.0,
+    "cost_price": 2000.0,
+    "profit_margin": 2499.0,
+    "category": "gaming",
+    "features": [
+      "Gas Spring Counterbalance",
+      "Supports 2x 35\" Displays",
+      "Integrated Cable Channels",
+      "Clamp / Grommet Mount"
+    ],
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_09",
+    "name": "BungeeMaster Mouse Cable Anchor",
+    "description": "Flexible rust-resistant silicone cable arm and weighted base eliminating mouse drag and snagging.",
+    "price": 699.0,
+    "cost_price": 250.0,
+    "profit_margin": 449.0,
+    "category": "gaming",
+    "features": [
+      "Zero-Drag Cable Freedom",
+      "Heavy Weighted Non-Slip Base",
+      "Flexible Silicone Arm",
+      "Universal Fit"
+    ],
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_gaming_10",
+    "name": "RGB Headphone Stand & USB Hub",
+    "description": "Sturdy desk headphone hanger with 3x USB ports and 10 dynamic RGB glow modes.",
+    "price": 1499.0,
+    "cost_price": 600.0,
+    "profit_margin": 899.0,
+    "category": "gaming",
+    "features": [
+      "Stable Weighted Aluminum Base",
+      "3x USB 2.0 Hub",
+      "3.5mm Aux Audio Pass",
+      "10 RGB Light Modes"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_01",
+    "name": "GlowBar Smart Monitor Lightbar",
+    "description": "Asymmetric optical screen lightbar that reduces eye strain with auto-dimming ambient sensor.",
+    "price": 2499.0,
+    "cost_price": 1100.0,
+    "profit_margin": 1399.0,
+    "category": "smart_home",
+    "features": [
+      "Zero Screen Glare",
+      "Wireless Desktop Dial",
+      "Auto Brightness Sensor",
+      "Stepless Color Temp"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1507499739999-097706ad8914?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_02",
+    "name": "RGB Flow Smart Ambient Lightbars (Pair)",
+    "description": "Dual reactive TV/monitor backlighting bars with camera screen mirroring and music sync.",
+    "price": 3799.0,
+    "cost_price": 1750.0,
+    "profit_margin": 2049.0,
+    "category": "smart_home",
+    "features": [
+      "16 Million Colors",
+      "Screen Sync Camera",
+      "Music Rhythm Sensor",
+      "Voice Assistant Control"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1507499739999-097706ad8914?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_03",
+    "name": "SmartPlug 16A Energy Monitor (2-Pack)",
+    "description": "Wi-Fi smart plugs with real-time electricity consumption telemetry and automated schedules.",
+    "price": 1299.0,
+    "cost_price": 550.0,
+    "profit_margin": 749.0,
+    "category": "smart_home",
+    "features": [
+      "16A Heavy Appliance Ready",
+      "Live kWh Energy Tracking",
+      "Timer & Schedule Automation",
+      "Alexa/Google Voice"
+    ],
+    "stock": 60,
+    "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_04",
+    "name": "360 SecurityCam 2K Pro",
+    "description": "2K Ultra-HD pan-tilt indoor smart security camera with AI motion tracking, night vision, and baby cry alert.",
+    "price": 2999.0,
+    "cost_price": 1350.0,
+    "profit_margin": 1649.0,
+    "category": "smart_home",
+    "features": [
+      "2K 3MP Sensor",
+      "360° Pan & Tilt",
+      "Full Color Night Vision",
+      "Two-Way Audio Talk"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_05",
+    "name": "SmartHex Modular Wall Panels (6-Pack)",
+    "description": "Magnetic interlocking geometric LED wall tiles with customizable touch animations and music rhythm.",
+    "price": 4999.0,
+    "cost_price": 2300.0,
+    "profit_margin": 2699.0,
+    "category": "smart_home",
+    "features": [
+      "6x Hexagonal Panels",
+      "Touch Sensitive Control",
+      "Music Beat Animation",
+      "App Custom Scenes"
+    ],
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1507499739999-097706ad8914?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_06",
+    "name": "SmartCurtain Motorized Robot",
+    "description": "Wireless retrofittable curtain opener robot with light sensor for automatic sunrise wakeups.",
+    "price": 3499.0,
+    "cost_price": 1600.0,
+    "profit_margin": 1899.0,
+    "category": "smart_home",
+    "features": [
+      "Tool-Free 30s Install",
+      "Ambient Light Sensor",
+      "Quiet 25dB Motor",
+      "8-Month Battery"
+    ],
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_07",
+    "name": "AromaMist Ultrasonic Smart Diffuser",
+    "description": "500ml Wi-Fi connected essential oil diffuser with ambient mood lighting and mist timer.",
+    "price": 1899.0,
+    "cost_price": 850.0,
+    "profit_margin": 1049.0,
+    "category": "smart_home",
+    "features": [
+      "500ml Large Capacity",
+      "Ultrasonic Cool Mist",
+      "7 LED Mood Colors",
+      "Auto Waterless Shutoff"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1507499739999-097706ad8914?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_08",
+    "name": "AirPure Desk HEPA Purifier",
+    "description": "True H13 HEPA personal desktop air purifier with PM2.5 real-time air quality indicator.",
+    "price": 3299.0,
+    "cost_price": 1500.0,
+    "profit_margin": 1799.0,
+    "category": "smart_home",
+    "features": [
+      "H13 Medical Grade HEPA",
+      "Captures 99.97% Allergens",
+      "PM2.5 Color Ring Sensor",
+      "Whisper Sleep Mode"
+    ],
+    "stock": 22,
+    "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_09",
+    "name": "SmartLock Biometric Door Handle",
+    "description": "5-in-1 keyless entry door lock with 0.3s biometric fingerprint, passcode, RFID card, and app unlock.",
+    "price": 6999.0,
+    "cost_price": 3400.0,
+    "profit_margin": 3599.0,
+    "category": "smart_home",
+    "features": [
+      "0.3s Rapid Fingerprint",
+      "Anti-Peep PIN Code",
+      "Emergency USB-C Port",
+      "12-Month Battery"
+    ],
+    "stock": 14,
+    "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_smarthome_10",
+    "name": "SmartGarden Hydroponic Herb Kit",
+    "description": "Indoor automated LED grow light hydroponic garden for fresh herbs, microgreens, and cherry tomatoes.",
+    "price": 4499.0,
+    "cost_price": 2100.0,
+    "profit_margin": 2399.0,
+    "category": "smart_home",
+    "features": [
+      "Full Spectrum LED Grow Light",
+      "Automated Water Circulation",
+      "Low Water Level Alarm",
+      "12 Pod Capacity"
+    ],
+    "stock": 16,
+    "image": "https://images.unsplash.com/photo-1507499739999-097706ad8914?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_01",
+    "name": "Titanium Smart Ring Gen 3",
+    "description": "Sleek titanium smart health ring tracking sleep stages, skin temperature trends, HRV, and daily recovery.",
+    "price": 8999.0,
+    "cost_price": 4200.0,
+    "profit_margin": 4799.0,
+    "category": "wearables",
+    "features": [
+      "Medical Grade Titanium",
+      "Continuous HRV & Skin Temp",
+      "5ATM Water Resistance",
+      "7-day Battery"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_02",
+    "name": "Ceramic Stealth Health Ring",
+    "description": "Scratch-resistant zirconia ceramic smart ring with subtle vibration notifications and gesture control.",
+    "price": 7499.0,
+    "cost_price": 3600.0,
+    "profit_margin": 3899.0,
+    "category": "wearables",
+    "features": [
+      "Zirconia Ceramic Shell",
+      "Touch Gesture Slide",
+      "Wireless Charging Case",
+      "Zero Subscription Fee"
+    ],
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_03",
+    "name": "SmartAudio Audio Sunglasses",
+    "description": "UV400 polarized sunglasses with discreet open-ear speakers and hands-free voice assistant mic.",
+    "price": 4999.0,
+    "cost_price": 2400.0,
+    "profit_margin": 2599.0,
+    "category": "wearables",
+    "features": [
+      "Polarized UV400 Lenses",
+      "Open-Ear Acoustic Speakers",
+      "Touch Volume Sliders",
+      "IPX4 Sweatproof"
+    ],
+    "stock": 28,
+    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_04",
+    "name": "PostureTrack Bio-Feedback Sensor",
+    "description": "Discreet magnetic sensor that vibrates gently when you slouch to build healthy spinal posture.",
+    "price": 1999.0,
+    "cost_price": 900.0,
+    "profit_margin": 1099.0,
+    "category": "wearables",
+    "features": [
+      "Real-time Slouch Vibration",
+      "Daily Posture Analytics",
+      "Hypoallergenic Silicone",
+      "15-day Battery"
+    ],
+    "stock": 45,
+    "image": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_05",
+    "name": "HapticVR Motion Trackers (Pair)",
+    "description": "Wireless body motion trackers for full-body VR immersion, fitness avatars, and spatial tracking.",
+    "price": 6499.0,
+    "cost_price": 3100.0,
+    "profit_margin": 3399.0,
+    "category": "wearables",
+    "features": [
+      "Sub-millimeter Precision",
+      "6-DoF Inertial Tracking",
+      "SteamVR & Meta Ready",
+      "12h Battery"
+    ],
+    "stock": 14,
+    "image": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1df?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_06",
+    "name": "HydraSense Sweat Hydration Band",
+    "description": "Wearable microfluidic patch monitoring sweat electrolyte concentration and dehydration warnings.",
+    "price": 2999.0,
+    "cost_price": 1400.0,
+    "profit_margin": 1599.0,
+    "category": "wearables",
+    "features": [
+      "Electrolyte Loss Sensing",
+      "Real-Time Hydration Score",
+      "Skin Safe Adhesive",
+      "Workout Sync"
+    ],
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_07",
+    "name": "SleepEEG Smart Sleep Headband",
+    "description": "Soft fabric sleep headband with clinical EEG brainwave sensors and intelligent sleep induction tones.",
+    "price": 9499.0,
+    "cost_price": 4600.0,
+    "profit_margin": 4899.0,
+    "category": "wearables",
+    "features": [
+      "Dual EEG Sensors",
+      "Bone Conduction Pink Noise",
+      "Deep Sleep Phase Booster",
+      "Breathable Fabric"
+    ],
+    "stock": 12,
+    "image": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_08",
+    "name": "VitalStrap Heart Rate Chest Belt",
+    "description": "Dual-protocol ANT+ and Bluetooth 5.3 ECG chest strap delivering medical accuracy for triathlons.",
+    "price": 2499.0,
+    "cost_price": 1100.0,
+    "profit_margin": 1399.0,
+    "category": "wearables",
+    "features": [
+      "ECG Millisecond Accuracy",
+      "Dual ANT+ & Bluetooth",
+      "Washable Elastic Strap",
+      "500h Coin Battery"
+    ],
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_09",
+    "name": "HeatedWinter Smart Gloves",
+    "description": "Carbon fiber heating elements with 3 temperature modes, touchscreen tips, and waterproof membrane.",
+    "price": 3299.0,
+    "cost_price": 1500.0,
+    "profit_margin": 1799.0,
+    "category": "wearables",
+    "features": [
+      "Instant 55°C Heating",
+      "Touchscreen Index & Thumb",
+      "Rechargeable Li-ion Packs",
+      "Windproof Softshell"
+    ],
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": "prod_wear_10",
+    "name": "StressBuster Biofeedback Pebble",
+    "description": "Pocket haptic biofeedback stone guiding rhythmic breathwork to lower cortisol and anxiety in 3 minutes.",
+    "price": 1899.0,
+    "cost_price": 850.0,
+    "profit_margin": 1049.0,
+    "category": "wearables",
+    "features": [
+      "Rhythmic Haptic Pulses",
+      "Galvanic Skin Response",
+      "Pocket Friendly",
+      "Instant Calm Preset"
+    ],
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60"
+  }
+]
