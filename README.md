@@ -1,11 +1,11 @@
-# GrowthPilot AI 🚀
+# GrowthPilot AI
 > **"The merchant controls the boundaries. The AI operates inside them."**
 
 An **agentic commerce & margin defense gateway** that empowers online merchants to deploy autonomous conversational sales assistants and accept machine-to-machine transactions from external AI buyers **without risking uncontrolled financial concessions**.
 
 ---
 
-## ⚡ Key Value Pillars in 30 Seconds
+## Key Value Pillars in 30 Seconds
 
 1. **AI Grows Merchant Revenue**: Autonomous conversational sales assistant understands customer intent, resolves price resistance, and recommends category-aligned upsells/cross-sells.
 2. **External AI Buyers Can Transact**: Standardized machine-readable discovery (`/.well-known/agent.json`), sanitized public catalog (`/api/agent/catalog`), and HMAC-SHA256 signed checkout intents (`/api/agent/checkout/intent`).
@@ -13,24 +13,24 @@ An **agentic commerce & margin defense gateway** that empowers online merchants 
 
 ---
 
-## 🎮 10-Scene Hackathon Demonstration
+## 10-Scene Hackathon Demonstration
 
 | Scene | Action / Trigger | What Happens | What It Proves |
 | :--- | :--- | :--- | :--- |
-| **1. Natural Search** | Click `🔍 1. Natural Search` | AI curates top matched earbud options with pricing & specs. | Natural intent understanding & catalog search. |
-| **2. Price Objection** | Click `🏷️ 2. Price Objection` | Under **Protect Profit**, AI proposes a cheaper alternative or shipping waiver to defend margin. | Margin defense without giving away profit. |
+| **1. Natural Search** | Click `1. Natural Search` | AI curates top matched earbud options with pricing & specs. | Natural intent understanding & catalog search. |
+| **2. Price Objection** | Click `2. Price Objection` | Under **Protect Profit**, AI proposes a cheaper alternative or shipping waiver to defend margin. | Margin defense without giving away profit. |
 | **3. Objective Shift** | Switch Merchant Objective to **Maximize Conversions** in Hub | AI dynamically shifts strategy to offer a direct 10% discount (`GROWTH10`). | Merchant objective directly steers AI decision-making. |
 | **4. AI Inspector** | Open **AI Inspector** sidebar | Displays live 7-stage lifecycle: `Signal → Context → Proposal → Policy → Gate → Action → Audit`. | Transparent, explainable decision pipeline. |
-| **5. Approval Gate** | Click `⚡ 4. High-Risk Gate (15%)` | Proposal exceeds 10% threshold → paused as `WAITING FOR MERCHANT APPROVAL`. | High-risk actions cannot execute without sign-off. |
+| **5. Approval Gate** | Click `4. High-Risk Gate (15%)` | Proposal exceeds 10% threshold → paused as `WAITING FOR MERCHANT APPROVAL`. | High-risk actions cannot execute without sign-off. |
 | **6. Merchant Sign-Off** | Click **Approve** in Merchant Hub | Backend revalidates stock & margin floor → approves → unlocks checkout. | Server-side revalidation protects against stale approvals. |
-| **7. Hard Safety Block** | Click `🛑 5. Hard Block (25%)` | Exceeds 20% hard cap → **BLOCKED**. AI explains limit without creating an approval. | Merchant approval cannot override hard boundaries. |
+| **7. Hard Safety Block** | Click `5. Hard Block (25%)` | Exceeds 20% hard cap → **BLOCKED**. AI explains limit without creating an approval. | Merchant approval cannot override hard boundaries. |
 | **8. Razorpay Checkout** | Click **Buy Now** or confirm checkout | Opens official Razorpay modal → complete payment → HMAC-SHA256 verified → celebration. | Real payment order generation & cryptographic verification. |
 | **9. A2A Happy Path** | Run `python buyer_agent.py` | External AI discovers store → signs mandate → backend creates Razorpay order (`HTTP 200`). | Standard machine-to-machine agent commerce. |
 | **10. A2A Policy Block** | Run `python buyer_agent.py --block` | Buyer agent requests 12 units → backend blocks with `HTTP 409` & retry suggestion. | Graceful failure handling for external AI agents. |
 
 ---
 
-## 🛡️ Tripartite Policy & Governance Engine
+## Tripartite Policy & Governance Engine
 
 ```
 +------------------------------------------------------------------------------------------+
@@ -46,7 +46,7 @@ An **agentic commerce & margin defense gateway** that empowers online merchants 
 
 ---
 
-## 🏗️ Architecture & Tech Stack
+## Architecture & Tech Stack
 
 - **Frontend**: React 18, Vite, Tailwind CSS, Lucide Icons, Recharts, Canvas Confetti
 - **Backend**: Python 3.13, FastAPI, Uvicorn, Pydantic
@@ -56,7 +56,7 @@ An **agentic commerce & margin defense gateway** that empowers online merchants 
 
 ---
 
-## ⚡ Quick Start & Setup
+## Quick Start & Setup
 
 ### 1. Environment Configuration
 Copy `.env.example` to `.env`:
