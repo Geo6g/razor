@@ -222,19 +222,61 @@ export default function App() {
   };
 
   const handleApprove = async (approvalId) => {
-    await fetch(`${API_BASE}/api/approvals/${approvalId}/approve`, {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ resolution_reason: "Approved by merchant." })
-    });
-    fetchApprovals();
+    try {
+      const res = await fetch(`${API_BASE}/api/approvals/${approvalId}/approve`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resolution_reason: "Approved by merchant." })
+      });
+      const data = await res.json();
+      fetchApprovals();
+      fetchDashboardStats();
+      if (res.ok) {
+        const discountedProd = data.product || {
+          id: data.approval?.product_id || "prod_earbuds_01",
+          name: data.approval?.product_name || "SoundFlow Wireless Earbuds",
+          price: data.discounted_price || 2124,
+          category: "earbuds"
+        };
+        const outcomeMsg = data.message || `🎉 **Great news! The merchant has approved your 15% discount request!**\n\n• Product: **${discountedProd.name}**\n• Approved Special Price: **Rs.${(data.discounted_price || 2124).toLocaleString("en-IN")}** (15% OFF)\n• Discount Code Applied: \`GROWTH15\`\n\n👉 Click **Buy Now** on the card below or reply **'confirm'** to checkout at **Rs.${(data.discounted_price || 2124).toLocaleString("en-IN")}** via secure Razorpay checkout!`;
+        
+        setChatMessages(prev => [...prev, {
+          sender: "agent",
+          message: outcomeMsg,
+          timestamp: new Date().toLocaleTimeString(),
+          products: [discountedProd]
+        }]);
+        setSessionState("awaiting_confirmation");
+        setActiveProductId(discountedProd.id);
+        setCurrentLifecycle(prev => [
+          ...prev,
+          { stage: "Risk Gate", detail: `Merchant Approved (ID: ${approvalId})`, status: "done" },
+          { stage: "Action Execution", detail: `15% Discount Applied (Special Price: Rs.${(data.discounted_price || 2124).toLocaleString("en-IN")})`, status: "active" }
+        ]);
+      }
+    } catch (e) {
+      console.error("Approve error:", e);
+    }
   };
 
   const handleBlock = async (approvalId) => {
-    await fetch(`${API_BASE}/api/approvals/${approvalId}/block`, {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ resolution_reason: "Blocked by merchant." })
-    });
-    fetchApprovals();
+    try {
+      const res = await fetch(`${API_BASE}/api/approvals/${approvalId}/block`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resolution_reason: "Blocked by merchant." })
+      });
+      const data = await res.json();
+      fetchApprovals();
+      fetchDashboardStats();
+      if (res.ok && data.message) {
+        setChatMessages(prev => [...prev, {
+          sender: "agent",
+          message: data.message,
+          timestamp: new Date().toLocaleTimeString()
+        }]);
+      }
+    } catch (e) {
+      console.error("Block error:", e);
+    }
   };
 
   const fetchSessionsFromLogs = () => {

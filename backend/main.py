@@ -271,9 +271,12 @@ def approve_action(approval_id: str, req: ApprovalResolutionRequest):
     merchant_settings = db.get_merchant_settings()
     max_disc   = float(merchant_settings.get('max_discount_pct', 20.0))
     min_margin = float(merchant_settings.get('min_margin', 400.0))
-    discount_pct = float(row.get('discount_pct') or 0.0)
-    discount_val = product['price'] * (discount_pct / 100.0)
+    discount_pct = float(row.get('discount_pct') or 15.0)
+    original_price = float(product['price'])
+    discount_val = original_price * (discount_pct / 100.0)
     remaining_margin = product['profit_margin'] - discount_val
+    discounted_price = round(original_price - discount_val)
+    coupon_code = f"GROWTH{int(discount_pct)}"
 
     # ── Hard Boundary Revalidation ────────────────────────────────────────────
     fail_reason = None
@@ -296,11 +299,47 @@ def approve_action(approval_id: str, req: ApprovalResolutionRequest):
 
     resolved = db.resolve_pending_approval(approval_id, "APPROVED",
                                            req.resolution_reason or "Merchant approved manually after safety revalidation.")
-    db.log_audit(row['session_id'], "approval_granted",
+    target_session = row['session_id']
+
+    # Log approval audit events
+    audit_id = db.log_audit(target_session, "approval_granted",
                  f"Merchant APPROVED action '{row['action_type']}' on '{row['product_name']}' "
                  f"(approval_id={approval_id}). Hard safety boundaries revalidated and satisfied.",
-                 {"approval_id": approval_id, "product_id": row['product_id']})
-    return {"status": "APPROVED", "approval": resolved}
+                 {"approval_id": approval_id, "product_id": row['product_id'], "discount_pct": discount_pct})
+
+    db.log_audit(target_session, "approval_executed",
+                 f"Special price of Rs.{discounted_price:,.0f} ({discount_pct:.0f}% OFF) unlocked for '{product['name']}'. Coupon: {coupon_code}.",
+                 {"approval_id": approval_id, "discounted_price": discounted_price, "coupon": coupon_code})
+
+    # Prepare customer-facing message and add to session chat history
+    approval_msg = (
+        f"🎉 **Great news! The merchant has approved your {int(discount_pct)}% discount request!**\n\n"
+        f"• Product: **{product['name']}**\n"
+        f"• Original Price: ~~Rs.{original_price:,.0f}~~\n"
+        f"• Approved Special Price: **Rs.{discounted_price:,.0f}** ({int(discount_pct)}% OFF)\n"
+        f"• Discount Code Applied: `{coupon_code}`\n\n"
+        f"👉 Click **Buy Now** below or reply **'confirm'** to checkout at **Rs.{discounted_price:,.0f}** via secure Razorpay checkout!"
+    )
+    db.add_chat_message(target_session, 'agent', approval_msg)
+
+    # Synchronize session state so customer can checkout at the approved discounted price
+    discounted_product = {**product, "price": float(discounted_price), "original_price": original_price}
+    state_data = get_session_state(target_session)
+    state_data['state'] = 'awaiting_confirmation'
+    state_data['pending_product'] = discounted_product
+    state_data['pending_quantity'] = 1
+    state_data['pending_amount'] = float(discounted_price)
+    state_data['incentive_used'] = coupon_code
+
+    return {
+        "status": "APPROVED",
+        "approval": resolved,
+        "message": approval_msg,
+        "discounted_price": discounted_price,
+        "coupon_code": coupon_code,
+        "product": discounted_product,
+        "audit_id": audit_id
+    }
 
 
 @app.post("/api/approvals/{approval_id}/block")
@@ -315,11 +354,23 @@ def block_action(approval_id: str, req: ApprovalResolutionRequest):
         raise HTTPException(status_code=409, detail=f"Approval already resolved: {row['status']}")
     resolved = db.resolve_pending_approval(approval_id, "BLOCKED",
                                            req.resolution_reason or "Merchant blocked this action.")
-    db.log_audit(row['session_id'], "approval_blocked",
+    target_session = row['session_id']
+    block_msg = (
+        f"The merchant reviewed your special discount request on **{row['product_name']}** "
+        f"and was unable to approve {row.get('discount_pct', 0):.0f}% off at this time. "
+        f"Standard pricing (Rs.{row['requested_amount']:,.0f}) applies, or I can help you find an alternative option."
+    )
+    db.add_chat_message(target_session, 'agent', block_msg)
+    audit_id = db.log_audit(target_session, "approval_blocked",
                  f"Merchant BLOCKED action '{row['action_type']}' on '{row['product_name']}' "
                  f"(approval_id={approval_id}).",
                  {"approval_id": approval_id, "product_id": row['product_id']})
-    return {"status": "BLOCKED", "approval": resolved}
+    return {
+        "status": "BLOCKED",
+        "approval": resolved,
+        "message": block_msg,
+        "audit_id": audit_id
+    }
 
 # ── Main chat endpoint ────────────────────────────────────────────────────────
 
@@ -894,18 +945,21 @@ def create_order_endpoint(req: CreateOrderRequest):
     """
     session_id = req.session_id or f"direct_{uuid.uuid4().hex[:8]}"
 
-    # Normalize amount: if sent in paise (>= 100 and typically large) or rupees
+    # Normalize amount: if explicitly provided (e.g. approved discount price), honor it!
     # Minimum required is 100 paise (Rs. 1.00)
-    if req.amount >= 100 and (not req.product_id or req.amount > 10000):
-        amount_in_paise = int(req.amount)
+    if req.amount and req.amount > 0:
+        if req.amount >= 10000:
+            amount_in_paise = int(req.amount)
+        else:
+            amount_in_paise = int(round(req.amount * 100))
     elif req.product_id:
         prod = db.get_product(req.product_id)
         if prod:
             amount_in_paise = int(round(prod['price'] * 100))
         else:
-            amount_in_paise = int(round(req.amount * 100)) if req.amount < 10000 else int(req.amount)
+            amount_in_paise = 10000
     else:
-        amount_in_paise = int(round(req.amount * 100)) if req.amount < 10000 else int(req.amount)
+        amount_in_paise = 10000
 
     if amount_in_paise < 100:
         raise HTTPException(
