@@ -565,7 +565,7 @@ def chat_endpoint(req: ChatRequest):
 
     # ── Case 1: Multi-Item Discovery / Search / Category Browsing ───────────────
     if signal in ('general', 'budget_constraint', 'feature_inquiry') and intent.get('action') not in ('buy', 'confirm'):
-        candidate_list = top_products if len(top_products) > 1 else agent.match_top_products(session_id, matched_product['category'], limit=4)
+        candidate_list = top_products if top_products else agent.match_top_products(session_id, matched_product['category'], max_price=max_price, limit=4)
         if not candidate_list:
             candidate_list = [matched_product]
 
@@ -623,7 +623,7 @@ def chat_endpoint(req: ChatRequest):
 
     # ── Case 2: Comparison Mode ────────────────────────────────────────────────
     if signal == 'comparison':
-        compare_candidates = top_products[:2] if len(top_products) >= 2 else agent.match_top_products(session_id, matched_product['category'], limit=2)
+        compare_candidates = top_products[:2] if len(top_products) >= 2 else agent.match_top_products(session_id, matched_product['category'], max_price=max_price, limit=2)
         if len(compare_candidates) >= 2:
             p1, p2 = compare_candidates[0], compare_candidates[1]
             p1_feats = p1.get('features', []) if isinstance(p1.get('features'), list) else json.loads(p1.get('features', '[]'))

@@ -562,7 +562,7 @@ export default function App() {
       ]);
       if (mRes.ok) setMetrics(await mRes.json());
       if (aRes.ok) { const d = await aRes.json(); setApprovals(d.approvals || []); }
-      if (cRes.ok) setCharts(await cRes.json());
+      if (cRes.ok) setChartData(await cRes.json());
       if (sRes.ok) setStrategyStats(await sRes.json());
       if (setRes.ok) setMerchantSettings(await setRes.json());
     } catch (e) {

@@ -284,30 +284,79 @@ def parse_intent(session_id, message, current_state='idle'):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. Product Matching (unchanged)
+# 2. Product Matching (Category-Aware Semantic Search & Strict Price Filtering)
 # ─────────────────────────────────────────────────────────────────────────────
+
+CATEGORY_SYNONYMS = {
+    'earbuds': {'earbuds', 'earbud', 'buds', 'earphones', 'earphone', 'tws', 'earhooks', 'in-ear', 'inear'},
+    'headphones': {'headphones', 'headphone', 'headset', 'over-ear', 'on-ear', 'overear', 'onear'},
+    'smartwatches': {'smartwatch', 'smartwatches', 'watch', 'watches', 'band', 'fitnesstracker'},
+    'speakers': {'speaker', 'speakers', 'soundbar', 'boombox', 'subwoofer'},
+    'accessories': {'stand', 'stands', 'charger', 'chargers', 'charging', 'cable', 'cables', 'case', 'cases', 'dock', 'mount', 'adapter', 'holder'},
+    'gaming': {'controller', 'controllers', 'gamepad', 'mouse', 'keyboard', 'gaming'},
+    'smart_home': {'lightbar', 'bulb', 'plug', 'camera', 'smarthome'},
+    'wearables': {'ring', 'rings', 'glasses', 'tracker', 'trackers', 'vr'},
+    'powerbanks': {'powerbank', 'powerbanks', 'battery pack'}
+}
+
+GENERIC_MODIFIERS = {'wireless', 'bluetooth', 'smart', 'pro', 'mini', 'portable', 'fast', 'premium', 'ultra', 'lite', 'max', 'best', 'good', 'cheap', 'budget', 'new', 'top'}
+
+def score_product(p, query, max_price=None):
+    if max_price is not None and p['price'] > max_price:
+        return 0
+
+    q_lower = query.lower().strip()
+    q_tokens = set(re.findall(r'\b\w+\b', q_lower))
+    nl, dl, cl = p['name'].lower(), p['description'].lower(), p['category'].lower()
+
+    # Identify category intent from query
+    target_cats = set()
+    for cat, synonyms in CATEGORY_SYNONYMS.items():
+        if q_tokens.intersection(synonyms) or any(s in q_lower for s in synonyms):
+            target_cats.add(cat)
+            if cat in ('earbuds', 'headphones'):
+                target_cats.add('earbuds')
+                target_cats.add('headphones')
+            elif cat in ('smartwatches', 'wearables'):
+                target_cats.add('smartwatches')
+                target_cats.add('wearables')
+
+    # If category intent exists, strictly enforce that product matches category or relevant synonyms
+    if target_cats:
+        cat_match = cl in target_cats
+        noun_match = any(s in nl for cat in target_cats for s in CATEGORY_SYNONYMS.get(cat, set()))
+        if not (cat_match or noun_match):
+            return 0  # Completely filter out unrelated categories like stands or chargers
+
+    score = 0
+    if q_lower == nl:
+        score += 150
+    elif q_lower in nl:
+        score += 60
+
+    for t in q_tokens:
+        if t in GENERIC_MODIFIERS:
+            if t in nl: score += 8
+            if t in dl: score += 2
+        else:
+            if t in nl: score += 25
+            if t in cl: score += 15
+            if t in dl: score += 4
+
+    return score
+
 
 def match_product(session_id, query, max_price=None, quantity=1):
     if not query:
         return None, "No search term provided."
 
     products = db.get_products()
-    query_tokens = query.lower().split()
     scored = []
 
     for p in products:
-        score = 0
-        nl, dl, cl = p['name'].lower(), p['description'].lower(), p['category'].lower()
-        if query.lower() == nl:   score += 150
-        elif query.lower() in nl: score += 50
-        for t in query_tokens:
-            if t in nl: score += 20
-            if t in cl: score += 10
-            if t in dl: score += 3
-        if max_price is not None and p['price'] > max_price:
-            score = -1
-        if score > 0:
-            scored.append((p, score))
+        s = score_product(p, query, max_price)
+        if s > 0:
+            scored.append((p, s))
 
     scored.sort(key=lambda x: x[1], reverse=True)
     payload = {"query": query, "max_price": max_price, "quantity": quantity, "candidates": len(scored)}
@@ -332,20 +381,11 @@ def match_top_products(session_id, query, max_price=None, limit=3):
     if not query:
         return []
     products = db.get_products()
-    query_tokens = query.lower().split()
     scored = []
     for p in products:
-        score = 0
-        nl, dl, cl = p['name'].lower(), p['description'].lower(), p['category'].lower()
-        if query.lower() in nl: score += 50
-        for t in query_tokens:
-            if t in nl: score += 20
-            if t in cl: score += 10
-            if t in dl: score += 3
-        if max_price is not None and p['price'] > max_price:
-            score = -1
-        if score > 0:
-            scored.append((p, score))
+        s = score_product(p, query, max_price)
+        if s > 0:
+            scored.append((p, s))
     scored.sort(key=lambda x: x[1], reverse=True)
     return [p for p, _ in scored[:limit]]
 
