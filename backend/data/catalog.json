@@ -382,7 +382,7 @@
     "profit_margin": 2549.0,
     "category": "headphones",
     "features": [
-      "90° Swivel Earcups",
+      "90\u00b0 Swivel Earcups",
       "3.5m Coiled Cable",
       "3000mW High Power",
       "Gold-plated Jack"
@@ -1034,7 +1034,7 @@
       "Aluminum Stem"
     ],
     "stock": 40,
-    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": "prod_acc_02",
@@ -1102,7 +1102,7 @@
       "Cool Running"
     ],
     "stock": 50,
-    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": "prod_acc_06",
@@ -1170,7 +1170,7 @@
       "IP67 Water Resistant"
     ],
     "stock": 35,
-    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": "prod_acc_10",
@@ -1201,10 +1201,10 @@
       "Auto Motorized Clamping",
       "15W Fast Qi Charging",
       "Super-Capacitor Backup",
-      "360° Ball Joint"
+      "360\u00b0 Ball Joint"
     ],
     "stock": 45,
-    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": "prod_acc_12",
@@ -1272,7 +1272,7 @@
       "GaN Prime Heat Guard"
     ],
     "stock": 18,
-    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": "prod_acc_16",
@@ -1283,7 +1283,7 @@
     "profit_margin": 349.0,
     "category": "accessories",
     "features": [
-      "28° Anti-Spy Filter",
+      "28\u00b0 Anti-Spy Filter",
       "9H Scratch Resistance",
       "Oleophobic Anti-Fingerprint",
       "Auto-Dust Alignment Frame"
@@ -1306,7 +1306,7 @@
       "Compact Slide Mechanism"
     ],
     "stock": 50,
-    "image": "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&auto=format&fit=crop&q=60"
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": "prod_acc_18",
@@ -1335,7 +1335,7 @@
     "category": "accessories",
     "features": [
       "N52 Powerful Magnets",
-      "360° Rotation + 180° Flip",
+      "360\u00b0 Rotation + 180\u00b0 Flip",
       "Zinc Alloy Build",
       "Snap On / Off Easily"
     ],
@@ -1437,7 +1437,7 @@
     "category": "gaming",
     "features": [
       "Semiconductor Cold Plate",
-      "Drops Temp by 18°C",
+      "Drops Temp by 18\u00b0C",
       "MagSafe Magnetic Attachment",
       "Quiet Fan"
     ],
@@ -1590,7 +1590,7 @@
     "category": "smart_home",
     "features": [
       "2K 3MP Sensor",
-      "360° Pan & Tilt",
+      "360\u00b0 Pan & Tilt",
       "Full Color Night Vision",
       "Two-Way Audio Talk"
     ],
@@ -1782,7 +1782,7 @@
       "12h Battery"
     ],
     "stock": 14,
-    "image": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1df?w=500&auto=format&fit=crop&q=60"
+    "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": "prod_wear_06",
@@ -1844,7 +1844,7 @@
     "profit_margin": 1799.0,
     "category": "wearables",
     "features": [
-      "Instant 55°C Heating",
+      "Instant 55\u00b0C Heating",
       "Touchscreen Index & Thumb",
       "Rechargeable Li-ion Packs",
       "Windproof Softshell"

@@ -28,6 +28,18 @@ const triggerConfetti = () => {
 
 const API_BASE = typeof window !== "undefined" && window.location.port === "5173" ? "http://127.0.0.1:8000" : "";
 
+const CATEGORY_FALLBACK_IMAGES = {
+  earbuds: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60",
+  headphones: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60",
+  smartwatches: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60",
+  speakers: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60",
+  accessories: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&auto=format&fit=crop&q=60",
+  gaming: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&auto=format&fit=crop&q=60",
+  smart_home: "https://images.unsplash.com/photo-1507499739999-097706ad8914?w=500&auto=format&fit=crop&q=60",
+  wearables: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60",
+  default: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60"
+};
+
 const OBJECTIVES = [
   { id: "protect_profit",       label: "Protect Profit",             desc: "Avoid unnecessary discounts. Prioritise margin preservation over conversion volume." },
   { id: "maximize_conversions", label: "Maximize Conversions",       desc: "Convert more customers. The AI may offer incentives when purchase intent is high." },
@@ -932,7 +944,15 @@ export default function App() {
                           {m.products.map(p => (
                             <div key={p.id} className="border border-white/10 bg-[#0F1115] rounded-2xl overflow-hidden hover:border-[#F7931A]/50 transition-all duration-300 glow-card hover:-translate-y-1">
                               <div className="aspect-video bg-[#030304] relative overflow-hidden">
-                                <img src={p.image} className="w-full h-full object-cover" alt={p.name} />
+                                <img
+                                  src={p.image}
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = CATEGORY_FALLBACK_IMAGES[p.category] || CATEGORY_FALLBACK_IMAGES.default;
+                                  }}
+                                  className="w-full h-full object-cover"
+                                  alt={p.name}
+                                />
                                 <span className="absolute top-2 right-2 bg-gradient-to-r from-[#EA580C] to-[#F7931A] text-black text-[8px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full shadow-[0_0_10px_rgba(247,147,26,0.8)]">
                                   BEST MATCH
                                 </span>
@@ -1795,7 +1815,15 @@ export default function App() {
                           <tr key={p.id} className="hover:bg-white/[0.02] transition-all">
                             <td className="py-3.5 px-5">
                               <div className="flex items-center gap-3">
-                                <img src={p.image} className="w-10 h-8 object-cover rounded-lg bg-gray-900 border border-white/10 flex-shrink-0" alt="" />
+                                <img
+                                  src={p.image}
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = CATEGORY_FALLBACK_IMAGES[p.category] || CATEGORY_FALLBACK_IMAGES.default;
+                                  }}
+                                  className="w-10 h-8 object-cover rounded-lg bg-gray-900 border border-white/10 flex-shrink-0"
+                                  alt=""
+                                />
                                 <div className="min-w-0">
                                   <div className="font-heading font-bold text-white truncate text-xs">{p.name}</div>
                                 </div>
