@@ -76,8 +76,8 @@ class CreateOrderRequest(BaseModel):
     notes: Optional[Dict[str, Any]] = None
 
 class VerifyRequest(BaseModel):
-    session_id: str
-    status: str
+    session_id: Optional[str] = "default_session"
+    status: Optional[str] = "success"
     razorpay_order_id: str
     razorpay_payment_id: Optional[str] = None
     razorpay_signature: Optional[str] = None
@@ -1042,23 +1042,28 @@ def create_order_endpoint(req: CreateOrderRequest):
 
 @app.post("/api/verify-payment")
 def verify_payment_endpoint(req: VerifyRequest):
-    if req.status == 'failed':
+    if req.status == 'failed' or req.error:
         payments.record_client_payment_failure(req.session_id, req.razorpay_order_id, req.error or {})
         return {"status": "recorded", "message": "Failure logged."}
-    elif req.status == 'success':
-        if not req.razorpay_payment_id or not req.razorpay_signature:
-            raise HTTPException(status_code=400, detail="Missing signature tokens.")
-        verified = payments.verify_razorpay_payment(
-            session_id=req.session_id,
-            razorpay_order_id=req.razorpay_order_id,
-            razorpay_payment_id=req.razorpay_payment_id,
-            razorpay_signature=req.razorpay_signature
-        )
-        if verified:
-            return {"status": "success", "message": "Payment verified!"}
-        else:
-            raise HTTPException(status_code=400, detail="Signature verification failed.")
-    raise HTTPException(status_code=400, detail="Invalid status.")
+
+    if not req.razorpay_payment_id or not req.razorpay_signature:
+        raise HTTPException(status_code=400, detail="Missing signature tokens.")
+
+    verified = payments.verify_razorpay_payment(
+        session_id=req.session_id,
+        razorpay_order_id=req.razorpay_order_id,
+        razorpay_payment_id=req.razorpay_payment_id,
+        razorpay_signature=req.razorpay_signature
+    )
+    if verified:
+        return {
+            "status": "success",
+            "message": "Payment verified!",
+            "razorpay_order_id": req.razorpay_order_id,
+            "razorpay_payment_id": req.razorpay_payment_id
+        }
+    else:
+        raise HTTPException(status_code=400, detail="Signature verification failed.")
 
 
 # ── Merchant dashboard endpoints ──────────────────────────────────────────────

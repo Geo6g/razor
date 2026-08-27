@@ -6,15 +6,20 @@ from dotenv import load_dotenv
 import db
 
 # Load environment variables
-load_dotenv()
+load_dotenv(override=True)
 
-RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
-RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID', 'rzp_test_TUqe2YclwEOent')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET', 'CbnirB0hGURSaqHNaEVvSGkD')
+
+def get_credentials():
+    load_dotenv(override=True)
+    key_id = os.getenv('RAZORPAY_KEY_ID') or RAZORPAY_KEY_ID
+    key_secret = os.getenv('RAZORPAY_KEY_SECRET') or RAZORPAY_KEY_SECRET
+    return key_id, key_secret
 
 def get_razorpay_client():
     """Initialize the Razorpay client dynamically from environment."""
-    key_id = os.getenv('RAZORPAY_KEY_ID') or RAZORPAY_KEY_ID
-    key_secret = os.getenv('RAZORPAY_KEY_SECRET') or RAZORPAY_KEY_SECRET
+    key_id, key_secret = get_credentials()
     if not key_id or not key_secret:
         raise ValueError("Razorpay credentials RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET are missing from environment.")
     return razorpay.Client(auth=(key_id, key_secret))
@@ -49,7 +54,8 @@ def create_razorpay_order(session_id, amount_in_rupees, order_db_id):
     )
     
     try:
-        if not RAZORPAY_KEY_ID or not RAZORPAY_KEY_SECRET or RAZORPAY_KEY_ID == "rzp_test_placeholder":
+        key_id, key_secret = get_credentials()
+        if not key_id or not key_secret or key_id == "rzp_test_placeholder":
             raise ValueError("Using local mock mode")
         client = get_razorpay_client()
         data = {
@@ -134,7 +140,8 @@ def verify_razorpay_payment(session_id, razorpay_order_id, razorpay_payment_id, 
 
     # Standard Razorpay HMAC-SHA256 Verification
     try:
-        secret = RAZORPAY_KEY_SECRET or os.getenv('RAZORPAY_KEY_SECRET', 'test_secret')
+        _, secret = get_credentials()
+        secret = secret or 'test_secret'
         msg = f"{razorpay_order_id}|{razorpay_payment_id}".encode('utf-8')
         generated_signature = hmac.new(
             secret.encode('utf-8'),
