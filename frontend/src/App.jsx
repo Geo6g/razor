@@ -361,87 +361,8 @@ export default function App() {
     });
   };
 
-  const executeCheckoutWithData = async (checkoutData) => {
-    if (!checkoutData || !checkoutData.options) return;
-    const options = { ...checkoutData.options };
-
-    if (!options.key) {
-      options.key = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_TUTxVpkZIVp1Lo";
-    }
-
-    const rawOrderId = options.order_id || checkoutData.orderId || "";
-
-    // Standard Razorpay response handler
-    options.handler = async (response) => {
-      setChatMessages(prev => [...prev, { sender: "agent", message: "Verifying HMAC-SHA256 payment signature with backend...", timestamp: new Date().toLocaleTimeString() }]);
-      setPendingCheckout(null);
-      setShowPaymentModal(null);
-      const verifiedOrderId = response.razorpay_order_id || rawOrderId || "order_settled";
-      try {
-        const vRes = await fetch(`${API_BASE}/api/verify-payment`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            session_id: sessionId,
-            status: "success",
-            razorpay_order_id: verifiedOrderId,
-            razorpay_payment_id: response.razorpay_payment_id || `pay_rzp_${Date.now()}`,
-            razorpay_signature: response.razorpay_signature || "sig_hmac_sha256_verified"
-          })
-        });
-        const vData = await vRes.json();
-        if (vRes.ok) {
-          const outcomeMsg = `🎉 Payment verified & settled! Razorpay Order #${verifiedOrderId} (Payment ID: ${response.razorpay_payment_id || "pay_test_confirmed"}). Thank you for your purchase!`;
-          setChatMessages(prev => [...prev, { sender: "agent", message: outcomeMsg, timestamp: new Date().toLocaleTimeString() }]);
-          setCurrentLifecycle(prev => [...prev, { stage: "Outcome", detail: "Payment settled & verified via HMAC-SHA256", status: "done" }]);
-          triggerConfetti();
-        } else {
-          setChatMessages(prev => [...prev, { sender: "agent", message: `❌ Payment verification failed: ${vData.detail}`, timestamp: new Date().toLocaleTimeString() }]);
-        }
-      } catch (err) {
-        setChatMessages(prev => [...prev, { sender: "agent", message: `Verification network error: ${err.message}`, timestamp: new Date().toLocaleTimeString() }]);
-      }
-      fetchDashboardStats();
-    };
-
-    options.modal = {
-      ondismiss: async () => {
-        setChatMessages(prev => [...prev, { sender: "agent", message: "Checkout modal dismissed by customer.", timestamp: new Date().toLocaleTimeString() }]);
-        setPendingCheckout(null);
-        try {
-          await fetch(`${API_BASE}/api/verify-payment`, {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ session_id: sessionId, status: "failed", razorpay_order_id: rawOrderId, error: { description: "User dismissed payment popup" } })
-          });
-        } catch {}
-        fetchDashboardStats();
-      }
-    };
-
-    await loadRazorpaySDK();
-
-    if (window.Razorpay) {
-      try {
-        const rzp = new window.Razorpay(options);
-        rzp.on("payment.failed", async (resp) => {
-          setChatMessages(prev => [...prev, { sender: "agent", message: `Payment failed: ${resp.error?.description || "Card declined"}`, timestamp: new Date().toLocaleTimeString() }]);
-          setPendingCheckout(null);
-          try {
-            await fetch(`${API_BASE}/api/verify-payment`, {
-              method: "POST", headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ session_id: sessionId, status: "failed", razorpay_order_id: rawOrderId, error: resp.error })
-            });
-          } catch {}
-          fetchDashboardStats();
-        });
-        rzp.open();
-        return;
-      } catch (err) {
-        console.warn("Razorpay SDK open error, opening fallback modal:", err);
-      }
-    }
-
-    // Fallback to custom modal if SDK unavailable
+  const executeCheckoutWithData = (checkoutData) => {
+    if (!checkoutData) return;
     setShowPaymentModal(checkoutData);
   };
 
