@@ -46,8 +46,80 @@ An **agentic commerce & margin defense gateway** that empowers online merchants 
 
 ---
 
-## Architecture & Tech Stack
+## System Architecture
 
+```mermaid
+flowchart TD
+    subgraph Clients["Entry Channels"]
+        B2C["B2C Storefront<br/>(Natural Search / Deals / Chat)"]
+        M2M["External AI Buyer Agent<br/>(Machine-to-Machine CLI / Protocol)"]
+        Merchant["Merchant Hub<br/>(Objectives / Boundaries / Approvals)"]
+    end
+
+    subgraph Gateway["FastAPI Application Gateway (:8000)"]
+        Discovery["Discovery Manifest<br/>(/.well-known/agent.json)"]
+        ChatRouter["Conversational Intent Router<br/>(/api/chat)"]
+        A2ARouter["A2A Mandate Gateway<br/>(/api/agent/checkout/*)"]
+        OrdersRouter["Razorpay Order Gateway<br/>(/api/create-order & /api/verify-payment)"]
+    end
+
+    subgraph CoreEngine["AI Reasoning & Margin Defense Core"]
+        LLM["AI Heuristic & Intent Parser<br/>(Claude 3.5 / Deterministic Parser)"]
+        ObjectiveInjector["Strategic Objective Injector<br/>(Protect Profit / Maximize Conversions / Increase AOV)"]
+        
+        subgraph PolicyEngine["Tripartite Policy Validation Layer"]
+            Cap["Hard Discount Cap (20%)"]
+            Floor["Minimum Profit Floor (Rs.400)"]
+            Qty["Per-SKU Quantity Cap (5 units)"]
+            Stock["Live Stock Inventory Check"]
+        end
+        
+        subgraph RiskGate["Risk Governance & Branching Engine"]
+            SafeBranch["SAFE (<= 10% Disc)<br/>Auto-Approved"]
+            GateBranch["HIGH RISK (10% - 20% Disc)<br/>Waiting for Merchant Approval"]
+            BlockBranch["VIOLATION (> 20% / Neg Margin)<br/>Hard Blocked (HTTP 409)"]
+        end
+    end
+
+    subgraph ExternalServices["External Payment & Settlement Layer"]
+        RZP_API["Razorpay API<br/>(POST /v1/orders)"]
+        RZP_Modal["Razorpay Checkout.js Modal<br/>(UPI / Card / Netbanking)"]
+        HMAC["HMAC-SHA256 Signature Verification<br/>(order_id + '|' + payment_id)"]
+    end
+
+    subgraph Storage["Authoritative Data Layer"]
+        SQLite[("Append-Only SQLite Ledger<br/>(growthpilot.db)")]
+        Triggers["Database Engine Triggers<br/>(prevent_audit_log_update / delete)"]
+    end
+
+    %% Flow Connections
+    B2C --> ChatRouter
+    B2C --> OrdersRouter
+    M2M --> Discovery
+    M2M --> A2ARouter
+    Merchant --> Gateway
+
+    ChatRouter --> LLM
+    A2ARouter --> PolicyEngine
+    LLM --> ObjectiveInjector --> PolicyEngine
+    
+    PolicyEngine --> RiskGate
+    RiskGate --> SafeBranch
+    RiskGate --> GateBranch
+    RiskGate --> BlockBranch
+
+    GateBranch -.->|"1-Click Manual Sign-Off & Revalidation"| Merchant
+    SafeBranch --> OrdersRouter
+    
+    OrdersRouter --> RZP_API
+    OrdersRouter --> RZP_Modal
+    RZP_Modal --> HMAC
+    
+    Gateway --> SQLite
+    Triggers -.-> SQLite
+```
+
+### Tech Stack
 - **Frontend**: React 18, Vite, Tailwind CSS, Lucide Icons, Recharts, Canvas Confetti
 - **Backend**: Python 3.13, FastAPI, Uvicorn, Pydantic
 - **Database**: SQLite3 with Engine-Level Immutability Triggers
