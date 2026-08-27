@@ -1047,6 +1047,13 @@ def record_outcome(req: StrategyOutcomeRequest):
     )
     return {"status": "recorded"}
 
+
+@app.post("/api/demo/reset")
+def reset_demo_endpoint():
+    """Reset all orders, metrics, approvals, and state for a fresh recording session."""
+    SESSION_STATES.clear()
+    return db.reset_demo_data()
+
 # ── Abandoned checkout endpoints ──────────────────────────────────────────────
 
 @app.get("/api/abandoned-checkouts")

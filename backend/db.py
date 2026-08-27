@@ -958,3 +958,52 @@ def get_dashboard_chart_data():
         "products_chart": products_chart,
         "strategy_performance": strategy_performance_chart
     }
+
+
+def reset_demo_data():
+    """Resets demo orders, conversations, approvals, and metrics to a fresh state for a clean demo recording."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DROP TRIGGER IF EXISTS prevent_audit_log_update")
+    cursor.execute("DROP TRIGGER IF EXISTS prevent_audit_log_delete")
+    cursor.execute("DELETE FROM orders")
+    cursor.execute("DELETE FROM conversations")
+    cursor.execute("DELETE FROM checkout_events")
+    cursor.execute("DELETE FROM customer_memory")
+    cursor.execute("DELETE FROM pending_approvals")
+    cursor.execute("DELETE FROM strategy_outcomes")
+    cursor.execute("DELETE FROM buyer_intents")
+    cursor.execute("DELETE FROM audit_log")
+
+    # Recreate immutable audit triggers
+    cursor.execute('''
+        CREATE TRIGGER IF NOT EXISTS prevent_audit_log_update
+        BEFORE UPDATE ON audit_log
+        BEGIN
+            SELECT RAISE(FAIL, 'Audit log entries are immutable and cannot be modified.');
+        END;
+    ''')
+    cursor.execute('''
+        CREATE TRIGGER IF NOT EXISTS prevent_audit_log_delete
+        BEFORE DELETE ON audit_log
+        BEGIN
+            SELECT RAISE(FAIL, 'Audit log entries are immutable and cannot be deleted.');
+        END;
+    ''')
+
+    conn.commit()
+    conn.close()
+
+    # Reset merchant settings to default Protect Profit state
+    save_merchant_settings(
+        objective='protect_profit',
+        max_discount_pct=20.0,
+        min_margin=400.0,
+        shipping_cost=100.0,
+        high_risk_discount_threshold=10.0
+    )
+
+    # Re-sync products and initial log
+    init_db()
+    log_audit("system", "system_initialized", "GrowthPilot demo database cleanly reset to initial state.")
+    return {"status": "success", "message": "Demo data and metrics successfully reset to fresh state."}
