@@ -1068,6 +1068,15 @@ def verify_payment_endpoint(req: VerifyRequest):
 
 # ── Merchant dashboard endpoints ──────────────────────────────────────────────
 
+@app.get("/api/merchant/orders")
+def get_merchant_orders():
+    conn = db.get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM orders ORDER BY created_at DESC, id DESC LIMIT 100')
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
 @app.get("/api/merchant/metrics")
 def get_metrics():
     return db.get_merchant_metrics()

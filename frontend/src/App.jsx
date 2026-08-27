@@ -112,6 +112,7 @@ export default function App() {
   const [chartData, setChartData] = useState({ revenue_chart: [], decisions_chart: [], products_chart: [], strategy_performance: [] });
   const [activityLogs, setActivityLogs] = useState([]);
   const [strategyStats, setStrategyStats] = useState({});
+  const [ordersList, setOrdersList] = useState([]);
 
   const [merchantSettings, setMerchantSettings] = useState({
     objective: "protect_profit", max_discount_pct: 10, min_margin: 400,
@@ -211,6 +212,7 @@ export default function App() {
     fetch(`${API_BASE}/api/merchant/logs`).then(r => r.json()).then(setActivityLogs).catch(() => {});
     fetch(`${API_BASE}/api/merchant/charts`).then(r => r.json()).then(setChartData).catch(() => {});
     fetch(`${API_BASE}/api/merchant/strategy-stats`).then(r => r.json()).then(setStrategyStats).catch(() => {});
+    fetch(`${API_BASE}/api/merchant/orders`).then(r => r.json()).then(setOrdersList).catch(() => {});
   };
 
   const fetchApprovals = () => {
@@ -2135,9 +2137,17 @@ export default function App() {
               {/* ── ORDERS TAB ── */}
               {activeTab === "orders" && (
                 <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-6 animate-fadeIn">
-                  <div className="border-b border-white/10 pb-6">
-                    <h2 className="text-xl font-heading font-bold text-white">Settlement Ledger</h2>
-                    <p className="text-xs text-[#94A3B8] mt-1 font-body">Immutable transaction logs with strategy attribution and gateway tokens</p>
+                  <div className="border-b border-white/10 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <h2 className="text-xl font-heading font-bold text-white">Settlement Ledger</h2>
+                      <p className="text-xs text-[#94A3B8] mt-1 font-body">Immutable transaction logs with strategy attribution and gateway tokens</p>
+                    </div>
+                    <button
+                      onClick={fetchDashboardStats}
+                      className="self-start sm:self-auto px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-[#94A3B8] hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all cursor-pointer">
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      Refresh Ledger
+                    </button>
                   </div>
                   <div className="border border-white/10 bg-[#0F1115] rounded-2xl overflow-hidden glow-card">
                     <table className="w-full text-left text-xs">
@@ -2147,27 +2157,54 @@ export default function App() {
                           <th className="py-4 px-5">Product</th>
                           <th className="py-4 px-5 text-right">Amount</th>
                           <th className="py-4 px-5 text-center">Incentive</th>
+                          <th className="py-4 px-5 text-center">Gateway Token</th>
                           <th className="py-4 px-5 text-center">Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 font-mono text-[11px]">
-                        {activityLogs.filter(l => l.action_type === "order_created" && l.payload).map(log => (
-                          <tr key={log.id} className="hover:bg-white/[0.02]">
-                            <td className="py-4 px-5 text-[#94A3B8] truncate max-w-[150px]">{log.session_id.slice(0, 18)}…</td>
-                            <td className="py-4 px-5 text-white font-heading font-bold">{log.payload?.product_name}</td>
-                            <td className="py-4 px-5 text-right text-[#FFD600] font-bold">Rs.{log.payload?.amount?.toLocaleString("en-IN")}</td>
-                            <td className="py-4 px-5 text-center">
-                              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold ${log.payload?.incentive_used !== 'none' ? "bg-[#F7931A]/15 text-[#FFD600] border border-[#F7931A]/30" : "text-[#94A3B8]"}`}>
-                                {log.payload?.incentive_used || "Standard"}
-                              </span>
-                            </td>
-                            <td className="py-4 px-5 text-center">
-                              <span className={`px-3 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase ${log.payload?.status === 'paid' ? "bg-[#FFD600]/15 text-[#FFD600] border border-[#FFD600]/30" : log.payload?.status === 'failed' ? "bg-red-500/15 text-red-400 border border-red-500/30" : "bg-[#F7931A]/15 text-[#F7931A] border border-[#F7931A]/30"}`}>
-                                {log.payload?.status || "pending"}
-                              </span>
-                            </td>
-                          </tr>
-                        ))}
+                        {(ordersList.length > 0 ? ordersList : activityLogs.filter(l => (l.action_type === "order_created" || l.action_type === "payment_created" || l.action_type === "payment_paid") && l.payload).map(l => ({
+                          id: l.id,
+                          session_id: l.session_id,
+                          product_name: l.payload?.product_name || "Product",
+                          amount: l.payload?.amount || 0,
+                          incentive_used: l.payload?.incentive_used || "none",
+                          razorpay_order_id: l.payload?.razorpay_order_id || l.payload?.id,
+                          razorpay_payment_id: l.payload?.razorpay_payment_id,
+                          status: (l.action_type === "payment_paid" || l.payload?.status === "paid") ? "paid" : (l.payload?.status || "pending")
+                        }))).map(order => {
+                          const isPaid = order.status === "paid" || order.status === "confirmed" || order.status === "settled" || !!order.razorpay_payment_id;
+                          const isFailed = order.status === "failed";
+                          return (
+                            <tr key={order.id || order.razorpay_order_id} className="hover:bg-white/[0.02] transition-colors">
+                              <td className="py-4 px-5 text-[#94A3B8] truncate max-w-[150px] font-mono">
+                                {order.session_id ? `${order.session_id.slice(0, 18)}…` : "direct_session"}
+                              </td>
+                              <td className="py-4 px-5 text-white font-heading font-bold">{order.product_name}</td>
+                              <td className="py-4 px-5 text-right text-[#FFD600] font-bold">Rs.{Number(order.amount).toLocaleString("en-IN")}</td>
+                              <td className="py-4 px-5 text-center">
+                                <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold ${order.incentive_used && order.incentive_used !== 'none' ? "bg-[#F7931A]/15 text-[#FFD600] border border-[#F7931A]/30" : "text-[#94A3B8]"}`}>
+                                  {order.incentive_used && order.incentive_used !== 'none' ? order.incentive_used : "Standard"}
+                                </span>
+                              </td>
+                              <td className="py-4 px-5 text-center">
+                                <span className="text-[10px] font-mono text-[#94A3B8] bg-white/5 px-2 py-0.5 rounded border border-white/5 truncate max-w-[120px] inline-block">
+                                  {order.razorpay_payment_id || order.razorpay_order_id || "rzp_token"}
+                                </span>
+                              </td>
+                              <td className="py-4 px-5 text-center">
+                                <span className={`px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider ${
+                                  isPaid
+                                    ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                                    : isFailed
+                                    ? "bg-red-500/15 text-red-400 border border-red-500/30"
+                                    : "bg-[#F7931A]/15 text-[#F7931A] border border-[#F7931A]/30"
+                                }`}>
+                                  {isPaid ? "PAID" : isFailed ? "FAILED" : "PENDING"}
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
