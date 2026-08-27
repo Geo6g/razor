@@ -569,9 +569,10 @@ def _heuristic_propose(session_id, product, signal, merchant_settings, customer_
     """Objective-aware deterministic decision engine directly driven by merchant objective and customer input."""
     margin      = product['profit_margin']
     objective   = merchant_settings.get('objective', 'protect_profit')
-    max_disc    = merchant_settings.get('max_discount_pct', 20.0)
-    min_margin  = merchant_settings.get('min_margin', 400.0)
-    shipping    = merchant_settings.get('shipping_cost', 100.0)
+    max_disc    = float(merchant_settings.get('max_discount_pct', 20.0))
+    min_margin  = float(merchant_settings.get('min_margin', 400.0))
+    shipping    = float(merchant_settings.get('shipping_cost', 100.0))
+    threshold   = float(merchant_settings.get('high_risk_discount_threshold', 10.0))
     inc_offered = customer_memory.get('incentive_offered', 'none')
 
     # Check for explicit customer discount percentage requests (e.g., "Can I get a 15% discount?" or "25% off")
@@ -623,13 +624,14 @@ def _heuristic_propose(session_id, product, signal, merchant_settings, customer_
 
         # ── 2. MAXIMIZE CONVERSIONS: Prefer Stronger Valid Incentives / Safe Discounts
         elif objective == 'maximize_conversions':
-            if margin > min_margin + (product['price'] * max_disc / 100):
+            safe_disc = min(max_disc, threshold, 10.0)
+            if margin > min_margin + (product['price'] * safe_disc / 100):
                 action = "offer_discount"
                 confidence = 0.90
-                disc_val = product['price'] * (max_disc / 100)
+                disc_val = product['price'] * (safe_disc / 100)
                 final_p = product['price'] - disc_val
-                reasoning = f"Objective is Maximize Conversions. Offering a {max_disc:.0f}% discount within policy limits to eliminate price resistance."
-                customer_message = f"Good news! To help you complete your order today, I can apply a special {max_disc:.0f}% discount on **{product['name']}**. Your price is now Rs.{final_p:,.0f}."
+                reasoning = f"Objective is Maximize Conversions. Offering an auto-approved {safe_disc:.0f}% discount within policy limits to eliminate price resistance."
+                customer_message = f"Good news! To help you complete your order today, I can apply a special {safe_disc:.0f}% discount on **{product['name']}**. Your price is now Rs.{final_p:,.0f}."
             else:
                 action = "offer_free_shipping"
                 confidence = 0.80
@@ -676,7 +678,8 @@ def _heuristic_propose(session_id, product, signal, merchant_settings, customer_
             reasoning = "Objective is Increase AOV. Proactively proposing a high-value bundle."
             customer_message = f"**{product['name']}** is great on its own, but pairs even better with **{partner['name']}**!"
 
-    disc_param = explicit_discount if explicit_discount is not None else (max_disc if action == 'offer_discount' else None)
+    auto_disc = min(max_disc, threshold, 10.0) if action == 'offer_discount' else None
+    disc_param = explicit_discount if explicit_discount is not None else auto_disc
     proposal = {
         "customer_state": f"{signal}_detected",
         "recommended_action": action,
@@ -794,8 +797,8 @@ def validate_proposal(session_id, proposal, product, quantity, merchant_settings
                 "validation_detail": f"HARD BLOCKED: Breaches margin floor (Rs.{remaining_margin:.0f} < Rs.{min_margin:.0f})."
             }
 
-        # Approval Gate Check: Inside Hard Bounds, but >= Approval Threshold
-        if proposed_pct >= threshold:
+        # Approval Gate Check: Inside Hard Bounds, but > Approval Threshold
+        if proposed_pct > threshold:
             details = (
                 f"AI proposed {proposed_pct:.0f}% discount on '{product['name']}' "
                 f"(Rs.{original_amt:,.0f} order, margin Rs.{margin:,.0f}). "
