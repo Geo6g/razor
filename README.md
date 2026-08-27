@@ -1,121 +1,102 @@
 # GrowthPilot AI 🚀
-### Track 01: AI Growth & Agentic Commerce
+> **"The merchant controls the boundaries. The AI operates inside them."**
 
-GrowthPilot AI is a complete **Agentic Commerce & Autonomous Growth Engine** built on Razorpay test-mode APIs that **grows revenue for online merchants** and makes them **transactable by external AI buyers end-to-end**.
+An **agentic commerce & margin defense gateway** that empowers online merchants to deploy autonomous conversational sales assistants and accept machine-to-machine transactions from external AI buyers **without risking uncontrolled financial concessions**.
 
 ---
 
-## 🎯 Track 01 Requirements & Feature Matrix
+## ⚡ Key Value Pillars in 30 Seconds
 
-| Hackathon Requirement | GrowthPilot AI Implementation | Status |
-| :--- | :--- | :---: |
-| **Conversational In-App Checkout** | AI shopping agent parses customer intents, handles price objections with dynamic margin defense, initiates Razorpay checkout popups, and confirms orders with server-side signature verification. | ✅ Ready |
-| **Agent-Readable Catalog & Manifest** | Implements `/.well-known/agent.json` discovery manifest and `/api/agent/catalog` feed stripping internal cost margins, optimized for LLM buyer agents. | ✅ Ready |
-| **Agent-to-Agent (A2A) Commerce** | Standardized protocol support for **AP2** (Agent Payment Protocol), **ACP** (Agent Commerce Protocol), **x402** (HTTP 402 Payment Required standard), and **NPCI UAP** (Unified Agent Protocol). | ✅ Ready |
-| **Cryptographic Mandates & Signing** | HMAC-SHA256 mandate signing and verification over canonical sorted JSON payloads with two-step commit (`intent` → `confirm`). | ✅ Ready |
-| **Autonomous AI Buyer Agent** | Includes Python CLI buyer agent (`buyer_agent.py`) and an interactive **Live A2A Protocol Simulator** directly in the Merchant Hub web UI. | ✅ Ready |
-| **Upsell & Cross-Sell Engine** | `/api/recommendations/upsell` dynamically generates complementary bundles, higher-tier upsells, and accessory pairings while enforcing positive profit margins. | ✅ Ready |
-| **Campaign Orchestrator** | `/api/campaign/orchestrate` executes bounded multi-step campaigns for cart abandonment recovery, tiered price negotiations, high-AOV bundles, and returning customer reactivation. | ✅ Ready |
-| **The Bar: Bounded, Gated & Explainable** | Every money action is bounded by merchant policy settings (Max discount cap %, Min profit margin preserved, Shipping fee waiver value). 5-stage explainable decision circuits. | ✅ Ready |
-| **The Bar: Full Audit Trail** | Immutable SQLite ledger records every signal, policy check, cryptographic mandate, Razorpay order, and payment event. | ✅ Ready |
-| **The Bar: Graceful Failure Handling** | **Scenario A**: Policy block for quantity cap breach (> 5 units) returns structured HTTP 409 with retry suggestions.<br>**Scenario B**: Payment card decline / abandonment is logged and recovered gracefully. | ✅ Ready |
+1. **AI Grows Merchant Revenue**: Autonomous conversational sales assistant understands customer intent, resolves price resistance, and recommends category-aligned upsells/cross-sells.
+2. **External AI Buyers Can Transact**: Standardized machine-readable discovery (`/.well-known/agent.json`), sanitized public catalog (`/api/agent/catalog`), and HMAC-SHA256 signed checkout intents (`/api/agent/checkout/intent`).
+3. **AI Cannot Make Uncontrolled Financial Decisions**: Tripartite server-side policy validation layer enforces hard discount caps, unit profit floors, and quantity limits before payment orders are created. High-risk actions require merchant approval with live server-side revalidation.
+
+---
+
+## 🎮 10-Scene Hackathon Demonstration
+
+| Scene | Action / Trigger | What Happens | What It Proves |
+| :--- | :--- | :--- | :--- |
+| **1. Natural Search** | Click `🔍 1. Natural Search` | AI curates top matched earbud options with pricing & specs. | Natural intent understanding & catalog search. |
+| **2. Price Objection** | Click `🏷️ 2. Price Objection` | Under **Protect Profit**, AI proposes a cheaper alternative or shipping waiver to defend margin. | Margin defense without giving away profit. |
+| **3. Objective Shift** | Switch Merchant Objective to **Maximize Conversions** in Hub | AI dynamically shifts strategy to offer a direct 10% discount (`GROWTH10`). | Merchant objective directly steers AI decision-making. |
+| **4. AI Inspector** | Open **AI Inspector** sidebar | Displays live 7-stage lifecycle: `Signal → Context → Proposal → Policy → Gate → Action → Audit`. | Transparent, explainable decision pipeline. |
+| **5. Approval Gate** | Click `⚡ 4. High-Risk Gate (15%)` | Proposal exceeds 10% threshold → paused as `WAITING FOR MERCHANT APPROVAL`. | High-risk actions cannot execute without sign-off. |
+| **6. Merchant Sign-Off** | Click **Approve** in Merchant Hub | Backend revalidates stock & margin floor → approves → unlocks checkout. | Server-side revalidation protects against stale approvals. |
+| **7. Hard Safety Block** | Click `🛑 5. Hard Block (25%)` | Exceeds 20% hard cap → **BLOCKED**. AI explains limit without creating an approval. | Merchant approval cannot override hard boundaries. |
+| **8. Razorpay Checkout** | Click **Buy Now** or confirm checkout | Opens official Razorpay modal → complete payment → HMAC-SHA256 verified → celebration. | Real payment order generation & cryptographic verification. |
+| **9. A2A Happy Path** | Run `python buyer_agent.py` | External AI discovers store → signs mandate → backend creates Razorpay order (`HTTP 200`). | Standard machine-to-machine agent commerce. |
+| **10. A2A Policy Block** | Run `python buyer_agent.py --block` | Buyer agent requests 12 units → backend blocks with `HTTP 409` & retry suggestion. | Graceful failure handling for external AI agents. |
+
+---
+
+## 🛡️ Tripartite Policy & Governance Engine
+
+```
++------------------------------------------------------------------------------------------+
+|  SAFE ZONE (0% - 10% Discount)      --> Auto-Approved (if stock & margin floor pass)     |
+|  APPROVAL GATE (>10% - 20% Discount)--> Held for Merchant Approval (Queued in Hub)       |
+|  HARD BOUNDARY (>20% Discount, >5 Qty)-> Hard Blocked (HTTP 409 / No Override Possible)  |
++------------------------------------------------------------------------------------------+
+```
+
+- **Server-Side Revalidation**: Approving a held action revalidates current inventory, active margin floor, and discount cap before applying state changes.
+- **Append-Only Audit Ledger**: Every proposal, decision gate, and checkout commits an authoritative `AUD-XXXX` event to SQLite, protected by database engine triggers (`prevent_audit_log_update`, `prevent_audit_log_delete`).
+- **Zero Margin Leakage**: Wholesale unit costs (`cost_price`) and internal rupee profit margins are strictly redacted from public catalog feeds and client telemetry.
 
 ---
 
 ## 🏗️ Architecture & Tech Stack
 
-```text
-growthpilot-ai/
-├── frontend/                     # React 19 + Tailwind CSS + Recharts + Lucide
-│   ├── src/
-│   │   ├── App.jsx               # Storefront, Merchant Hub, A2A Studio, Campaigns Studio
-│   │   └── index.css             # Tailwind styling & dark-mode theme
-│   └── index.html                # Razorpay Checkout SDK integration
-├── backend/                      # FastAPI Python Server
-│   ├── data/
-│   │   ├── catalog.json          # 15 electronics products with cost, price, and margins
-│   │   └── growthpilot.db        # SQLite database with orders, audit logs, memory, settings
-│   ├── db.py                     # SQLite helper functions, schema migrations, audit trail
-│   ├── agent.py                  # AI Sales Assistant, Margin Defense Engine, Claude integration
-│   ├── agent_buyer.py            # A2A Commerce Surface, AP2/ACP/UAP endpoints & signing
-│   ├── payments.py               # Razorpay order creation and signature verification
-│   └── main.py                   # REST API routes & static asset serving
-├── buyer_agent.py                # Standalone Reference AI Buyer Agent (CLI)
-├── app.py                        # Root launcher (runs FastAPI server on port 8000)
-├── requirements.txt              # Python dependencies
-└── README.md                     # Documentation
-```
+- **Frontend**: React 18, Vite, Tailwind CSS, Lucide Icons, Recharts, Canvas Confetti
+- **Backend**: Python 3.13, FastAPI, Uvicorn, Pydantic
+- **Database**: SQLite3 with Engine-Level Immutability Triggers
+- **Payments**: Razorpay Standard Web Checkout (`checkout.js` + Orders API + HMAC-SHA256 signature verification)
+- **Agent Protocol**: Machine-Readable Manifest, Canonical JSON Normalization, HMAC-SHA256 Signing
 
 ---
 
-## ⚡ Setup & Run Instructions
+## ⚡ Quick Start & Setup
 
-### 1. Configure Credentials
-Create or edit `.env` in the root workspace folder (copy from `.env.example`):
+### 1. Environment Configuration
+Copy `.env.example` to `.env`:
 ```env
-# Optional: Falls back to built-in keyword parser if empty
-CLAUDE_API_KEY=your_anthropic_api_key_here
+# Optional: Anthropic Claude API Key (falls back to deterministic heuristic parser if empty)
+CLAUDE_API_KEY=
 
-# Razorpay Test Mode API Credentials (Required for payment gateway popups)
+# Razorpay Test Mode API Credentials
 RAZORPAY_KEY_ID=rzp_test_your_key_id_here
 RAZORPAY_KEY_SECRET=your_razorpay_secret_here
 
-# Buyer agent shared secret for HMAC-SHA256 mandate signing
-AGENT_BUYER_SECRET=your_shared_hmac_secret_here
+# Buyer Agent Shared Secret for HMAC-SHA256 mandate signing
+AGENT_BUYER_SECRET=growthpilot-demo-secret
 ```
 
-### 2. Install Dependencies & Build Frontend
+### 2. Install & Run
 ```bash
-# Install Python packages
+# Install Python backend dependencies
 pip install -r requirements.txt
 
-# Build the React frontend
+# Install & run React frontend
 cd frontend
 npm install
-npm run build
-cd ..
+npm run dev
 ```
 
-### 3. Launch the Application
+In a second terminal, launch the FastAPI server:
 ```bash
 python app.py
 ```
-Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser.
 
----
+- **Storefront**: [http://localhost:5173](http://localhost:5173)
+- **Merchant Hub**: [http://localhost:5173/#merchant](http://localhost:5173/#merchant)
+- **API Documentation**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-## 🎬 3-Minute Hackathon Demo Script
-
-### Flow 1: Conversational AI Checkout & Margin Defense (Storefront)
-1. Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** (Customer Storefront Mode).
-2. Click **"🎧 Earbuds under 3000"** or type `Show me wireless earbuds`.
-3. Click **"🏷️ Negotiate Deals"** or ask `Rs.4,999 seems too expensive for the SonicWave ANC Earbuds`.
-4. Observe the **5-Stage AI Decision Lifecycle** and **Decision Card**:
-   - High margin product → AI dynamically applies a 10% discount (`GROWTH10`) protecting ₹2,299 margin.
-5. Click **"Confirm & Pay"** or type `confirm` → Razorpay checkout popup opens seamlessly.
-6. Complete test payment or simulate card decline to demonstrate graceful failure handling.
-
-### Flow 2: Autonomous AI Buyer Simulation (A2A Protocol Hub)
-1. Switch to **Merchant Hub** → Click **"Agent-to-Agent (A2A)"** tab in sidebar.
-2. Select **"Happy Path Purchase"** → Click **"Launch AI Buyer Agent"**:
-   - Watch the agent discover manifest (`/.well-known/agent.json`), query catalog (`/api/agent/catalog`), sign HMAC-SHA256 mandate, pass policy check, create Razorpay order (`/api/agent/checkout/confirm`), and settle payment.
-3. Select **"Policy Block (Quantity Cap)"** → Click **"Launch AI Buyer Agent"**:
-   - Demonstrates **Graceful Failure**: AI Buyer requests 12 units (violating merchant limit of 5). Merchant policy evaluator intercepts and returns structured HTTP 409 with explainable retry suggestions.
-4. Click **"Inspect Payload"** on any step to inspect the cryptographic signatures and JSON data.
-
-### Flow 3: Autonomous Campaign Orchestrator & Upsell Engine
-1. In Merchant Hub, click **"Campaigns & Upsell"** tab.
-2. Select **"Abandoned Cart"** or **"Price Objection"** trigger:
-   - Preview the bounded multi-step campaign plan with delay channels, policy constraints, and explainable copy.
-3. In the **Upsell & Cross-Sell Studio**, select any catalog product and test recommendation modes (`Complementary Bundle`, `Higher-Tier Upsell`, `Compatible Accessories`):
-   - Shows real-time protected profit margin calculations.
-
-### Flow 4: Terminal CLI AI Buyer Execution
-Judges can also run the reference AI buyer agent from their command line:
+### 3. Run Autonomous Buyer Agent (CLI)
 ```bash
-# Happy path AP2 purchase:
+# Happy path machine-to-machine checkout:
 python buyer_agent.py
 
-# Policy block graceful failure path (quantity cap breach):
+# Policy block graceful failure simulation (12 units):
 python buyer_agent.py --block
 ```
