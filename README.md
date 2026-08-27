@@ -46,6 +46,46 @@ An **agentic commerce & margin defense gateway** that empowers online merchants 
 
 ---
 
+## Append-Only Audit Trail
+
+Every financial decision, gate evaluation, and checkout intent commits an authoritative, immutable log record in SQLite:
+
+```text
+[AUD-0566] 2026-08-27T08:24:12Z | Action: proposal_evaluated
+  • Signal: Price objection on 'SoundFlow Wireless Earbuds' (Rs.2,499)
+  • Strategy: protect_profit -> Propose Free Shipping waiver
+  • Policy Check: Margin preserved: Rs.1,199 (Floor: Rs.400) -> PASS
+  • Risk Gate: LOW -> APPROVED
+  • Status: Committed to SQLite (prevent_audit_log_update trigger active)
+```
+
+Application-level `UPDATE` and `DELETE` paths are disabled, ensuring an authoritative chronological decision trail.
+
+---
+
+## Graceful Failure Handling
+
+When external AI agents or customers request actions that violate merchant boundaries, the gateway halts execution and returns an explainable failure response rather than failing silently:
+
+### Example: SKU Quantity Cap Breach (Requested 12 units; Max allowed: 5)
+```http
+POST /api/agent/checkout/intent
+HTTP/1.1 409 Conflict
+Content-Type: application/json
+
+{
+  "status": "blocked",
+  "reason": "quantity_limit_exceeded",
+  "retry_suggestion": "Reduce quantity to 5 or fewer units.",
+  "max_allowed_per_sku": 5,
+  "product_id": "prod_earbuds_01"
+}
+```
+
+The failure is logged in the audit ledger (`buyer_intent_rejected`), and the transaction halts before any Razorpay payment order can be created.
+
+---
+
 ## Architecture & Tech Stack
 
 For complete Mermaid system flowcharts and sequence diagrams, see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
