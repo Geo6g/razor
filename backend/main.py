@@ -1081,7 +1081,29 @@ def get_strategy_stats():
 
 @app.get("/api/conversations/{session_id}")
 def get_conversation(session_id: str):
-    return db.get_all_chat_history(session_id)
+    messages = db.get_all_chat_history(session_id)
+    audit_events = db.get_audit_log(session_id)
+    buyer_intent = db.get_buyer_intent_by_session(session_id) if hasattr(db, 'get_buyer_intent_by_session') else None
+
+    order = None
+    try:
+        conn = db.get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM orders WHERE session_id = ? ORDER BY id DESC LIMIT 1", (session_id,))
+        r = cursor.fetchone()
+        if r:
+            order = dict(r)
+        conn.close()
+    except Exception:
+        pass
+
+    return {
+        "session_id": session_id,
+        "messages": messages,
+        "audit_events": audit_events,
+        "buyer_intent": buyer_intent,
+        "order": order
+    }
 
 # ── Strategy outcome feedback ─────────────────────────────────────────────────
 
@@ -1232,10 +1254,30 @@ def post_checkout_intent(req: BuyerCheckoutIntentRequest):
             status="rejected",
             created_at=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             expires_at=req.expires_at,
-            policy_version=agent_buyer.POLICY_VERSION,
+            policy_version=agent_buyer.POLICY_version if hasattr(agent_buyer, 'POLICY_version') else agent_buyer.POLICY_VERSION,
         )
         db.update_buyer_intent_status(
             intent_id, "rejected", rejection_reason=decision["reason"]
+        )
+        sess_id = req.session_id or f"buyer:{req.buyer_id}"
+        target_item = mandate["items"][0] if mandate.get("items") else {}
+        prod_obj = products_by_id.get(target_item.get("product_id")) or {}
+        db.log_audit(
+            session_id=sess_id,
+            action_type="buyer_intent_rejected",
+            reasoning=f"AI Buyer '{req.buyer_id}' checkout intent rejected: {decision['reason']}",
+            payload={
+                "intent_id": intent_id,
+                "buyer_id": req.buyer_id,
+                "product_id": target_item.get("product_id"),
+                "product_name": prod_obj.get("name", "Earbuds"),
+                "attempted_quantity": target_item.get("quantity"),
+                "max_allowed_quantity": decision.get("max_allowed_per_sku", 5),
+                "rejection_reason": decision["reason"],
+                "retry_suggestion": decision.get("retry_suggestion", "Reduce quantity to 5 or below"),
+                "http_status": 409,
+                "status": "rejected"
+            }
         )
         return JSONResponse(
             status_code=409,
@@ -1376,6 +1418,23 @@ def post_checkout_confirm(req: BuyerConfirmRequest):
         razorpay_order_id=rzp_order["id"],
         db_order_id=db_order_id,
         confirmed_at=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    )
+
+    db.log_audit(
+        session_id=session_id,
+        action_type="payment_created",
+        reasoning=f"Razorpay order {rzp_order['id']} created for Buyer Intent {intent['intent_id']} ({primary_item['name']}, Rs.{total:,.0f}).",
+        payload={
+            "intent_id": intent["intent_id"],
+            "buyer_id": req.buyer_id,
+            "product_id": primary_item["product_id"],
+            "product_name": primary_item["name"],
+            "quantity": primary_item.get("quantity", 1),
+            "unit_price": primary_item.get("unit_price", total),
+            "total_amount": total,
+            "razorpay_order_id": rzp_order["id"],
+            "status": "confirmed"
+        }
     )
 
     return {

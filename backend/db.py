@@ -765,6 +765,23 @@ def update_buyer_intent_status(intent_id, status, **fields):
     return True
 
 
+def get_buyer_intent_by_session(session_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM buyer_intents WHERE session_id = ? ORDER BY id DESC LIMIT 1', (session_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if not row:
+        return None
+    d = dict(row)
+    if d.get("mandate_payload"):
+        try:
+            d["mandate_payload"] = json.loads(d["mandate_payload"])
+        except Exception:
+            pass
+    return d
+
+
 # ── Conversations helpers ─────────────────────────────────────────────────────
 
 def add_chat_message(session_id, sender, message):

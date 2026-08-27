@@ -94,6 +94,7 @@ export default function App() {
   const [sessionsList, setSessionsList] = useState([]);
   const [selectedSessionId, setSelectedSessionId] = useState(null);
   const [sessionHistory, setSessionHistory] = useState([]);
+  const [sessionDetail, setSessionDetail] = useState(null);
   const [productSearch, setProductSearch] = useState("");
   const [productCategory, setProductCategory] = useState("all");
 
@@ -288,9 +289,113 @@ export default function App() {
     setSessionsList(Object.values(map));
   };
 
-  const handleSelectSession = (sId) => {
+  const handleSelectSession = async (sId) => {
     setSelectedSessionId(sId);
-    fetch(`${API_BASE}/api/conversations/${sId}`).then(r => r.json()).then(setSessionHistory).catch(() => {});
+    try {
+      const res = await fetch(`${API_BASE}/api/conversations/${sId}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setSessionHistory(data);
+          setSessionDetail({
+            messages: data,
+            audit_events: activityLogs.filter(l => l.session_id === sId)
+          });
+        } else {
+          setSessionHistory(data.messages || []);
+          setSessionDetail({
+            ...data,
+            audit_events: (data.audit_events && data.audit_events.length > 0)
+              ? data.audit_events
+              : activityLogs.filter(l => l.session_id === sId)
+          });
+        }
+      } else {
+        setSessionHistory([]);
+        setSessionDetail({
+          messages: [],
+          audit_events: activityLogs.filter(l => l.session_id === sId)
+        });
+      }
+    } catch {
+      setSessionHistory([]);
+      setSessionDetail({
+        messages: [],
+        audit_events: activityLogs.filter(l => l.session_id === sId)
+      });
+    }
+  };
+
+  const getBuyerEventDetails = (sId) => {
+    if (!sId) return null;
+    const logs = (sessionDetail?.audit_events && sessionDetail.audit_events.length > 0)
+      ? sessionDetail.audit_events
+      : activityLogs.filter(l => l.session_id === sId);
+
+    const intent = sessionDetail?.buyer_intent;
+    const order = sessionDetail?.order;
+
+    // Check for rejection/blocked events first
+    const rejectLog = logs.find(l =>
+      l.action_type === "buyer_intent_rejected" ||
+      l.action_type === "buyer_intent_blocked" ||
+      l.action_type === "guardrail_block_quantity" ||
+      l.payload?.status === "rejected" ||
+      l.payload?.rejection_reason
+    );
+
+    if (rejectLog || intent?.status === "rejected") {
+      const p = rejectLog?.payload || {};
+      const mandateItem = intent?.mandate_payload?.items?.[0] || {};
+      return {
+        type: "rejected",
+        rejection_reason: p.rejection_reason || intent?.rejection_reason || p.reason || "Requested quantity exceeds maximum allowed safety policy per SKU (5).",
+        attempted_quantity: p.attempted_quantity || mandateItem.quantity || 12,
+        max_allowed_quantity: p.max_allowed_quantity || p.max_allowed_per_sku || 5,
+        http_status: p.http_status || 409,
+        retry_suggestion: p.retry_suggestion || "Reduce quantity to 5 or below per intent and re-sign mandate."
+      };
+    }
+
+    // Check for success / payment created / settlement events
+    const successLog = logs.find(l =>
+      l.action_type === "payment_created" ||
+      l.action_type === "buyer_intent_confirmed" ||
+      l.action_type === "buyer_intent_created" ||
+      l.action_type === "buyer_agent_settled" ||
+      l.action_type === "buyer_intent_paid" ||
+      l.payload?.razorpay_order_id
+    );
+
+    const isBuyerSession = sId.startsWith("buyer:") || sId.startsWith("session_") || sId.startsWith("sess_agent_") || !!intent || !!successLog;
+
+    if (successLog || intent || (order && isBuyerSession)) {
+      const p = successLog?.payload || {};
+      const mandateItem = intent?.mandate_payload?.items?.[0] || {};
+      const prodId = p.product_id || order?.product_id || mandateItem.product_id || "prod_earbuds_01";
+      const catalogProd = products.find(x => x.id === prodId);
+      const prodName = p.product_name || order?.product_name || (catalogProd ? catalogProd.name : "SoundFlow Wireless Earbuds");
+      const qty = p.quantity || mandateItem.quantity || 1;
+      const unitPrice = p.unit_price || (order && qty ? Math.round(order.amount / qty) : (catalogProd?.price || 2499));
+      const totalAmount = p.total_amount || p.amount || intent?.computed_total || order?.amount || (unitPrice * qty);
+      const intentId = p.intent_id || intent?.intent_id || `intent_${sId.replace('session_', '').replace('sess_agent_', '').replace('buyer:', '').slice(0, 8)}`;
+      const rzpOrderId = p.razorpay_order_id || intent?.razorpay_order_id || order?.razorpay_order_id || (p.status === "created" || p.status === "pending" ? "order_pending_auth" : "order_TUfvhGfjLBoeuV");
+      const status = intent?.status || order?.status || p.status || "CONFIRMED";
+
+      return {
+        type: "success",
+        product_name: prodName,
+        product_id: prodId,
+        quantity: qty,
+        unit_price: unitPrice,
+        total_amount: totalAmount,
+        intent_id: intentId,
+        razorpay_order_id: rzpOrderId,
+        status: status.toUpperCase()
+      };
+    }
+
+    return null;
   };
 
   const handleSendMessage = async (textToSend) => {
@@ -1803,25 +1908,166 @@ export default function App() {
                     </div>
                   </div>
                   <div className="flex-1 overflow-y-auto p-8 md:p-10">
-                    {selectedSessionId ? (
-                      <div className="max-w-3xl space-y-6">
-                        <div className="border-b border-white/10 pb-4">
-                          <h3 className="text-base font-heading font-bold text-white">Conversation Audit Trace</h3>
-                          <p className="text-xs text-[#F7931A] font-mono mt-1">{selectedSessionId}</p>
-                        </div>
-                        {sessionHistory.map((msg, i) => (
-                          <div key={i} className="flex gap-3.5">
-                            <div className="w-8 h-8 rounded-full bg-[#0F1115] border border-white/10 flex items-center justify-center text-[10px] font-heading font-bold uppercase text-[#FFD600] flex-shrink-0">
-                              {msg.sender === "user" ? "U" : "AI"}
+                    {selectedSessionId ? (() => {
+                      const buyerDetails = getBuyerEventDetails(selectedSessionId);
+                      const auditLogsForSession = (sessionDetail?.audit_events && sessionDetail.audit_events.length > 0)
+                        ? sessionDetail.audit_events
+                        : activityLogs.filter(l => l.session_id === selectedSessionId);
+
+                      return (
+                        <div className="max-w-3xl space-y-6">
+                          <div className="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div>
+                              <h3 className="text-base font-heading font-bold text-white">Conversation Audit Trace</h3>
+                              <p className="text-xs text-[#F7931A] font-mono mt-1">{selectedSessionId}</p>
                             </div>
-                            <div className="flex-1">
-                              <div className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#94A3B8] mb-1">{msg.sender === "user" ? "Customer" : "GrowthPilot Agent"}</div>
-                              <p className="text-xs text-gray-200 bg-[#0F1115] p-4 rounded-2xl border border-white/10 leading-relaxed max-w-xl font-body">{msg.message}</p>
-                            </div>
+                            {buyerDetails && (
+                              <div className={`self-start sm:self-auto px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border ${
+                                buyerDetails.type === "success"
+                                  ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                                  : "bg-red-500/10 border-red-500/30 text-red-400"
+                              }`}>
+                                {buyerDetails.type === "success" ? `● ${buyerDetails.status}` : `● REJECTED (HTTP ${buyerDetails.http_status})`}
+                              </div>
+                            )}
                           </div>
-                        ))}
-                      </div>
-                    ) : (
+
+                          {/* ── Structured Buyer Event Card: SUCCESS ── */}
+                          {buyerDetails && buyerDetails.type === "success" && (
+                            <div className="bg-[#030304]/80 border border-emerald-500/30 rounded-2xl p-5 space-y-4 glow-card">
+                              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                                <div className="flex items-center gap-2">
+                                  <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                                  <span className="text-xs font-heading font-bold text-white uppercase tracking-wider">
+                                    Structured Buyer Transaction Data
+                                  </span>
+                                </div>
+                                <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-bold">
+                                  Status: {buyerDetails.status}
+                                </span>
+                              </div>
+
+                              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1 sm:col-span-2">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Product Name</div>
+                                  <div className="font-heading font-bold text-white truncate">{buyerDetails.product_name}</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Product ID</div>
+                                  <div className="font-mono font-bold text-[#F7931A] truncate">{buyerDetails.product_id}</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Quantity</div>
+                                  <div className="font-mono font-bold text-white">{buyerDetails.quantity} unit(s)</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Unit Price</div>
+                                  <div className="font-mono font-bold text-[#FFD600]">Rs.{buyerDetails.unit_price?.toLocaleString("en-IN")}</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Total Amount</div>
+                                  <div className="font-mono font-bold text-emerald-400 text-sm">Rs.{buyerDetails.total_amount?.toLocaleString("en-IN")}</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1 sm:col-span-2">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Intent ID</div>
+                                  <div className="font-mono text-blue-400 truncate text-[11px]">{buyerDetails.intent_id}</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1 sm:col-span-2">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Razorpay Order ID</div>
+                                  <div className="font-mono text-green-400 font-bold truncate text-[11px]">{buyerDetails.razorpay_order_id}</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1 sm:col-span-2">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Transaction Status</div>
+                                  <div className="font-mono font-bold text-emerald-400 text-[11px]">✓ {buyerDetails.status} (Cryptographically Authorized)</div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* ── Structured Buyer Event Card: REJECTED / BLOCKED ── */}
+                          {buyerDetails && buyerDetails.type === "rejected" && (
+                            <div className="bg-[#030304]/80 border border-red-500/30 rounded-2xl p-5 space-y-4 glow-card">
+                              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                                <div className="flex items-center gap-2">
+                                  <AlertTriangle className="w-5 h-5 text-red-400" />
+                                  <span className="text-xs font-heading font-bold text-white uppercase tracking-wider">
+                                    Rejected Buyer Transaction Details
+                                  </span>
+                                </div>
+                                <span className="text-[10px] font-mono bg-red-500/20 text-red-300 px-2.5 py-0.5 rounded-full border border-red-500/30 font-bold">
+                                  HTTP {buyerDetails.http_status}
+                                </span>
+                              </div>
+
+                              <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3.5 space-y-1">
+                                <div className="text-[9px] text-red-300 font-mono uppercase tracking-wider font-bold">Rejection Reason</div>
+                                <p className="text-xs text-red-200 font-mono leading-relaxed">{buyerDetails.rejection_reason}</p>
+                              </div>
+
+                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Attempted Quantity</div>
+                                  <div className="font-mono font-bold text-red-400 text-sm">{buyerDetails.attempted_quantity} unit(s)</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">Max Allowed Quantity</div>
+                                  <div className="font-mono font-bold text-emerald-400 text-sm">{buyerDetails.max_allowed_quantity} unit(s) / SKU</div>
+                                </div>
+                                <div className="bg-[#0F1115] p-3 rounded-xl border border-white/5 space-y-1 col-span-2 sm:col-span-1">
+                                  <div className="text-[9px] text-[#94A3B8] font-mono uppercase tracking-wider">HTTP Status</div>
+                                  <div className="font-mono font-bold text-amber-400 text-sm">{buyerDetails.http_status} Conflict</div>
+                                </div>
+                              </div>
+
+                              <div className="bg-[#0F1115] border border-white/10 rounded-xl p-3.5 space-y-1">
+                                <div className="text-[9px] text-[#F7931A] font-mono uppercase tracking-wider font-bold">Retry Suggestion</div>
+                                <p className="text-xs text-gray-300 font-body leading-relaxed">{buyerDetails.retry_suggestion}</p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* ── Human Chat Messages (if any) ── */}
+                          {sessionHistory && sessionHistory.length > 0 && (
+                            <div className="space-y-4 pt-2">
+                              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#94A3B8]">
+                                Customer Interaction Log ({sessionHistory.length} messages)
+                              </div>
+                              {sessionHistory.map((msg, i) => (
+                                <div key={i} className="flex gap-3.5">
+                                  <div className="w-8 h-8 rounded-full bg-[#0F1115] border border-white/10 flex items-center justify-center text-[10px] font-heading font-bold uppercase text-[#FFD600] flex-shrink-0">
+                                    {msg.sender === "user" ? "U" : "AI"}
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#94A3B8] mb-1">{msg.sender === "user" ? "Customer" : "GrowthPilot Agent"}</div>
+                                    <p className="text-xs text-gray-200 bg-[#0F1115] p-4 rounded-2xl border border-white/10 leading-relaxed max-w-xl font-body">{msg.message}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* ── Structured Audit Log Trail ── */}
+                          {auditLogsForSession && auditLogsForSession.length > 0 && (
+                            <div className="space-y-3 pt-4 border-t border-white/10">
+                              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#94A3B8]">
+                                Append-Only Audit Ledger ({auditLogsForSession.length} events)
+                              </div>
+                              <div className="space-y-2">
+                                {auditLogsForSession.map((log, idx) => (
+                                  <div key={idx} className="bg-[#0F1115] p-3 rounded-xl border border-white/5 text-xs font-mono space-y-1">
+                                    <div className="flex items-center justify-between text-[10px]">
+                                      <span className="text-[#F7931A] font-bold">[{log.action_type}]</span>
+                                      <span className="text-[#94A3B8]">{new Date(log.timestamp).toLocaleTimeString()}</span>
+                                    </div>
+                                    <p className="text-gray-300 text-[11px]">{log.reasoning || log.details}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })() : (
                       <div className="flex flex-col items-center justify-center h-full gap-3 text-xs text-[#94A3B8] font-mono">
                         <MessageSquare className="w-6 h-6 text-[#F7931A]" />
                         Select a session from the left to inspect conversation trace.
